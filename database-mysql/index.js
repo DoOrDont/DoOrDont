@@ -1,20 +1,13 @@
-var mysql = require('mysql');
+const mysql = require('mysql');
 
-var connection = mysql.createConnection({
-  host     : 'localhost',
-  user     : 'root',
-  password : 'FILL_ME_IN',
-  database : 'test'
+const DB_PATH = process.env.DB_PATH || 'localhost';
+const PASS = process.env.PASS || 'password';
+
+const connection = mysql.createConnection({
+  host: DB_PATH,
+  user: 'root',
+  password: PASS ,
+  database: 'doordontdb'
 });
 
-var selectAll = function(callback) {
-  connection.query('SELECT * FROM items', function(err, results, fields) {
-    if(err) {
-      callback(err, null);
-    } else {
-      callback(null, results);
-    }
-  });
-};
-
-module.exports.selectAll = selectAll;
+module.exports.connection = connection;
