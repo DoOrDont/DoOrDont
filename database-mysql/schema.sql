@@ -4,6 +4,7 @@ CREATE DATABASE doordontdb;
 
 USE doordontdb;
 
+<<<<<<< HEAD
 DROP TABLE IF EXISTS `users`;
 		
 CREATE TABLE `users` (
