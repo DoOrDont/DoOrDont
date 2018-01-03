@@ -16,7 +16,7 @@ After changes and before submitting pull request
 3. add imperative useful commit message
 4. if squashing commits, `git rebase -i` and pick commits
 5. `git pull --rebase upstream master`
-6. fix confilicts if necessary
+6. fix conflicts if necessary
 7. if conflicts were fixed, `git rebase --continue` 
 8. if conflicts were fixed, `git add` changed files
 9. if conflicts were fixed, `git commit`
