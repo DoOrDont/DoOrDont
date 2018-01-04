@@ -1,4 +1,5 @@
 const connection = require('../index.js').connection;
+const bcrypt = require('bcrypt-nodejs');
 
 /***********************************************
  Function:
@@ -83,12 +84,13 @@ module.exports.insertGoalsIntoDB = (goalsObj, callback) => {
 ************************************************/
 module.exports.insertUserIntoDB = (userObj, callback) => {
   const {username, password} = userObj;
-  //TODO: hash and salt password
-  connection.query('INSERT INTO users (username, password) VALUES (?, ?)', [username, password], (err, results) => {
-    if(err) throw err;
-    
-    console.log('Inserted user:', results);
-    callback(results);
+  bcrypt.hash(password, null, null, (err, hash) => {
+    connection.query('INSERT INTO users (username, password) VALUES (?, ?)', [username, hash], (err, results) => {
+      if(err) console.log(err);
+      
+      console.log('Inserted user:', results);
+      callback(results);
+    });
   });
 };
 
@@ -106,21 +108,23 @@ module.exports.insertUserIntoDB = (userObj, callback) => {
   Output:
    None
    NOTE: All data must be handled in the callback function.
-         the results variable will be an Object with the shape:
-         {
-           id: Number,
-           username: String,
-           password: String,
-         }
+         The callback will be passed true if password matches,
+         false if otherwise.
 ************************************************/
 module.exports.getAndVerifyUser = (userObj, callback) => {
   const {username, password} = userObj;
-  //TODO: Hash and salt password
-  connection.query('SELECT * FROM users WHERE username=? AND password=?', [username, password], (err, results) => {
+  connection.query('SELECT * FROM users WHERE username=?', [username], (err, results) => {
     if(err) throw err;
     
-    console.log('Retrieved user:', results);
-    callback(results);
+    bcrypt.compare(password, results.password, (res) => {
+      if(res) {
+        console.log('Password is a match!');
+        callback(true);
+      } else {
+        console.log('Password is NOT a match!');
+        callback(false);
+      }
+    });
   });
 };
 
@@ -130,7 +134,7 @@ module.exports.getAndVerifyUser = (userObj, callback) => {
 //   'description': 'testing testing',
 //   'punishment': 'bad bad',
 //   'frequency': 6,
-//   'username': 'jon'
+//   'username': 'jason'
 // };
 
 // let testUser = {
@@ -138,6 +142,6 @@ module.exports.getAndVerifyUser = (userObj, callback) => {
 //   'password': 'superawesomepassword'
 // };
 
-// insertUserIntoDB(testUser, () => {
-//   getAndVerifyUser(testUser, () => console.log('DONE putting and retrieving user'));
+// exports.insertUserIntoDB(testUser, () => {
+//   exports.getAndVerifyUser(testUser, () => console.log('DONE putting and retrieving user'));
 // });
