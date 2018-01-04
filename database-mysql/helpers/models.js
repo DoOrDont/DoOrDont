@@ -19,6 +19,7 @@ const bcrypt = require('bcrypt-nodejs');
            description: String,
            punishment: String,
            frequency: Number,
+           counter: Number,
            user_id: 1
          }
 ***********************************************/
@@ -54,8 +55,8 @@ module.exports.getGoalsForUser = (username, callback) => {
 module.exports.insertGoalsIntoDB = (goalsObj, callback) => {
   const {description, punishment, frequency, username} = goalsObj;
 
-  connection.query(`INSERT INTO goals (description, punishment, frequency, user_id) 
-                    VALUES (?, ?, ?, (SELECT id FROM users WHERE username=?))`,
+  connection.query(`INSERT INTO goals (description, punishment, frequency, counter, user_id) 
+                    VALUES (?, ?, ?, 0, (SELECT id FROM users WHERE username=?))`,
                     [description, punishment, frequency, username],
                     (err, results) => {
                       if (err) throw err;
@@ -63,6 +64,40 @@ module.exports.insertGoalsIntoDB = (goalsObj, callback) => {
                       console.log('DB results:', results);
                       callback(results);
                     });
+};
+
+/************************************************
+ Function:
+   Increments counter on goal
+
+ Inputs:
+   goalId Number representing the id of desired goal
+
+ Output:
+   None.
+   The server will create a results object with metadata
+   about the update, that object will be fed to the callback
+************************************************/
+module.exports.incrementGoalCounter = (goalId, callback) => {
+  connection.query('UPDATE goals SET counter=counter+1 WHERE id=?', [goalId], (err, results) => {
+    if(err) throw err;
+    
+    callback(results);
+  });
+};
+
+
+module.exports.checkGoalCompletion = (goalId, callback) => {
+  connection.query('SELECT frequency, counter FROM goals WHERE id=?', [goalId], (err, results) => {
+    if(err) throw err;
+    
+    let {frequency, counter} = results[0];
+    if(counter >= frequency) {
+      callback({metGoal: true, frequency, counter});
+    } else {
+      callback({metGoal: false, frequency, counter });
+    }
+  });
 };
 
 /************************************************
@@ -129,19 +164,27 @@ module.exports.getAndVerifyUser = (userObj, callback) => {
 };
 
 
-// TESTS for inserting and retrieving user
-// let testGoal = {
-//   'description': 'testing testing',
-//   'punishment': 'bad bad',
-//   'frequency': 6,
-//   'username': 'jason'
-// };
+// TESTS for inserting and retrieving user, adding goals, and checking if goals are complete
+let testGoal = {
+  'description': 'testing testing',
+  'punishment': 'bad bad',
+  'frequency': 6,
+  'username': 'Jon Doe'
+};
 
-// let testUser = {
-//   'username': 'Jon Doe',
-//   'password': 'superawesomepassword'
-// };
+let testUser = {
+  'username': 'Jon Doe',
+  'password': 'superawesomepassword'
+};
 
-// exports.insertUserIntoDB(testUser, () => {
-//   exports.getAndVerifyUser(testUser, () => console.log('DONE putting and retrieving user'));
-// });
+exports.insertUserIntoDB(testUser, () => {
+  exports.getAndVerifyUser(testUser, () => {
+    console.log('DONE putting and retrieving user')
+    exports.insertGoalsIntoDB(testGoal, () => {
+      exports.incrementGoalCounter(1, (result) => {
+        console.log(result);
+        exports.checkGoalCompletion(1, (result) => console.log(result));
+      });
+    });
+  });
+});

@@ -20,6 +20,7 @@ CREATE TABLE `goals` (
   `description` VARCHAR(50) NOT NULL,
   `punishment` VARCHAR(200) NOT NULL,
   `frequency` INT NOT NULL,
+  `counter` INT NOT NULL,
   `user_id` INTEGER NOT NULL,
   PRIMARY KEY (`id`)
 );
