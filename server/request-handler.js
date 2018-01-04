@@ -1,13 +1,27 @@
 var express = require('express');
 var bodyParser = require('body-parser');
-var database = require('../database-mysql/index.js');
 
 var app = express();
+var session = require('express-session');
+var cookie = require('cookie-parser');
 
-/***** Handle GET requests ******/
+var database = require('../database-mysql/index.js');
+
+/***** Handles user credentials ******/
+var restrict = (req, res, next) => {
+  // if user is logged in, serve index
+  // else, error message
+  if (req.session.user) {
+    next();
+  } else {
+    req.session.error = 'Access denied!';
+    res.redirect('/login');
+  }
+};
+
+/******* Handle GET requests ********/
 app.get('/', function (req, res) {
-  // Serves up index.html (currently login page)
-  // Will refactor to redirect to user profile
+  // Serves up index.html user profile
   // once we handle cookies
   if (err) { return res.sendStatus(400); } 
   else { res.json(); }
@@ -26,7 +40,7 @@ app.get('/goals', function(req, res) {
 });
 
 
-/***** Handle POST requests ******/
+/******* Handle POST requests ********/
 app.post('/login', function(req, res) {
   // Will cross reference login credentials
   // with db to confirm or deny login
@@ -47,4 +61,3 @@ app.post('/goals', function(req, res) {
   else { res.json(); }
 });
 
-module.exports.requestHandler = requestHandler;
