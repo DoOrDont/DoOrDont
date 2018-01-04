@@ -10,7 +10,9 @@ const connection = require('../index.js').connection;
  Output:
    None
    NOTE: All data must be handled in the callback function.
-         the results variable will be an Object with the shape:
+         the results variable will be an Array of goal objects:
+         [goalObj1, goalObj2, etc...]
+         Each goal object will have the shape:
          {
            id: Number,
            description: String,
