@@ -4,6 +4,10 @@
 2. CLONE
 3. NPM INSTALL
 4. CONFIGURE DATABASE
+  * Install MySQL with `brew install mysql`
+  * Start MySQL service with `brew services start mysql`
+  * Set password for server `mysqladmin -u root password 'password'`
+  * Run `mysql -u root < server/schema.sql` in the root directory to create db and tables
 5. SET DATABASE CONNECTION VARIABLES
 6. NPM SCRIPTS
   *`npm run react-dev`
