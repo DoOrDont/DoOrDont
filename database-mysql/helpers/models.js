@@ -18,6 +18,7 @@ const bcrypt = require('bcrypt-nodejs');
            id: Number,
            description: String,
            punishment: String,
+           initiate: Boolean,
            frequency: Number,
            counter: Number,
            user_id: 1
@@ -35,16 +36,21 @@ module.exports.getGoalsForUser = (username, callback) => {
 
 /************************************************
  Function:
-   Inserts a goal into the database
+   Inserts a goalsObj into the database
 
  Inputs:
    goalsObj: Object with shape:
              {
                'description': String,
                'punishment': String,
+               'initiate': Boolean,
                'frequency': Number,
                'username': String
              }
+      Note: The 'initiate' Boolean indicates whether the user wants to start or quit an activity
+            (e.g. 'I want to start going to the gym 4 days a week' <'initiate' = true>   
+                   VS
+                  'I want to quit smoking' <'initiate' = false>)
 
  Output:
    None.
@@ -53,13 +59,16 @@ module.exports.getGoalsForUser = (username, callback) => {
          an object with metadata pertaining to the insertion
 ************************************************/
 module.exports.insertGoalsIntoDB = (goalsObj, callback) => {
-  const {description, punishment, frequency, username} = goalsObj;
+  const {description, punishment, initiate, frequency, username} = goalsObj;
+  let initiating = initiate ? 1 : 0;
 
-  connection.query(`INSERT INTO goals (description, punishment, frequency, counter, user_id) 
-                    VALUES (?, ?, ?, 0, (SELECT id FROM users WHERE username=?))`,
-                    [description, punishment, frequency, username],
+  console.log('Inserting goal:', goalsObj);
+
+  connection.query(`INSERT INTO goals (description, punishment, initiate, frequency, counter, user_id) 
+                    VALUES (?, ?, ?, ?, 0, (SELECT id FROM users WHERE username=?))`,
+                    [description, punishment, initiating, frequency, username],
                     (err, results) => {
-                      if (err) throw err;
+                      if (err) return console.log(err);
 
                       console.log('DB results:', results);
                       callback(results);
@@ -86,16 +95,33 @@ module.exports.incrementGoalCounter = (goalId, callback) => {
   });
 };
 
+/************************************************
+ Function:
+   Checks if user has achieve their goal this week
 
+ Inputs:
+   goalId Number representing the id of desired goal
+
+ Output:
+   None.
+   The callback will be given an Object with the shape:
+   {
+     metGoal: Boolean,
+     frequency: Number,
+     counter: Number,
+     initiate: Boolean
+   }
+************************************************/
 module.exports.checkGoalCompletion = (goalId, callback) => {
-  connection.query('SELECT frequency, counter FROM goals WHERE id=?', [goalId], (err, results) => {
+  connection.query('SELECT initiate, frequency, counter FROM goals WHERE id=?', [goalId], (err, results) => {
     if(err) throw err;
     
-    let {frequency, counter} = results[0];
+    const {initiate, frequency, counter} = results[0];
+    let initiating = initiate ? true : false;
     if(counter >= frequency) {
-      callback({metGoal: true, frequency, counter});
+      callback({metGoal: initiating, frequency, counter, initiate: initiating});
     } else {
-      callback({metGoal: false, frequency, counter });
+      callback({metGoal: !initiating, frequency, counter, initiate: initiating});
     }
   });
 };
@@ -168,6 +194,7 @@ module.exports.getAndVerifyUser = (userObj, callback) => {
 let testGoal = {
   'description': 'testing testing',
   'punishment': 'bad bad',
+  'initiate': false,
   'frequency': 6,
   'username': 'Jon Doe'
 };
@@ -179,11 +206,11 @@ let testUser = {
 
 exports.insertUserIntoDB(testUser, () => {
   exports.getAndVerifyUser(testUser, () => {
-    console.log('DONE putting and retrieving user')
+    console.log('DONE putting and retrieving user');
     exports.insertGoalsIntoDB(testGoal, () => {
       exports.incrementGoalCounter(1, (result) => {
         console.log(result);
-        exports.checkGoalCompletion(1, (result) => console.log(result));
+        exports.checkGoalCompletion(1, (result) => console.log('Final result:', result));
       });
     });
   });
