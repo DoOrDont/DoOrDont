@@ -7,10 +7,10 @@ var cookie = require('cookie-parser');
 
 var database = require('../database-mysql/index.js');
 
-/***** Handles user credentials ******/
+/***** Handles authorization ******/
 var restrict = (req, res, next) => {
   // if user is logged in, serve index
-  // else, error message
+  // if user is not logged in, serve login
   if (req.session.user) {
     next();
   } else {
@@ -20,11 +20,10 @@ var restrict = (req, res, next) => {
 };
 
 /******* Handle GET requests ********/
-app.get('/', function (req, res) {
-  // Serves up index.html user profile
-  // once we handle cookies
+app.get('/', restrict, function (req, res) {
+  // Serves up index.html user profile once we handle cookies
   if (err) { return res.sendStatus(400); } 
-  else { res.json(); }
+  else { res.sendFile(path.join(__dirname + '/index.html')); }
 });
 
 app.get('/login', function(req, res) {
@@ -33,11 +32,11 @@ app.get('/login', function(req, res) {
   else { res.json(); }
 });
 
-app.get('/goals', function(req, res) {
-  // Will fetch goals for the specific user
-  if (err) { return res.sendStatus(400); } 
-  else { res.json(); }
-});
+// app.get('/goals', function(req, res) {
+//   // Will fetch goals for the specific user
+//   if (err) { return res.sendStatus(400); } 
+//   else { res.json(); }
+// });
 
 
 /******* Handle POST requests ********/
@@ -45,7 +44,16 @@ app.post('/login', function(req, res) {
   // Will cross reference login credentials
   // with db to confirm or deny login
   if (err) { return res.sendStatus(400); } 
-  else { res.json(); }
+  else { 
+    // access database
+      // for each user in db
+        // if submitted username = db username
+          // if bcrypt.compareSync(db password, submitted password)
+            // req.session.user = req.body.username
+            // res.redirect('/')
+          // else password is wrong
+        // else user does not exist in db    
+  }
 });
 
 app.post('/signup', function(req, res) {
@@ -55,7 +63,7 @@ app.post('/signup', function(req, res) {
   else { res.json(); }
 });
 
-app.post('/goals', function(req, res) {
+app.post('/goals', restrict, function(req, res) {
   // Will add goals to user in database
   if (err) { return res.sendStatus(400); } 
   else { res.json(); }
