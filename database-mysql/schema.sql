@@ -19,7 +19,9 @@ CREATE TABLE `goals` (
   `id` INTEGER AUTO_INCREMENT,
   `description` VARCHAR(50) NOT NULL,
   `punishment` VARCHAR(200) NOT NULL,
+  `initiate` BOOLEAN NOT NULL,
   `frequency` INT NOT NULL,
+  `counter` INT NOT NULL,
   `user_id` INTEGER NOT NULL,
   PRIMARY KEY (`id`)
 );
