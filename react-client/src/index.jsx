@@ -2,12 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import List from './components/List.jsx';
+import dumbyData from '../../database-mysql/helpers/testData.js';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = { 
-      items: []
+      goals: []
     }
   }
 
@@ -28,9 +29,11 @@ class App extends React.Component {
   render () {
     return (<div>
       <h1>Item List</h1>
-      <List items={this.state.items}/>
+    {/* the below line is set to pull test data change to 
+    this.state.goals when no longer needing dummy data*/}
+      <List goals={this.props.goals}/>
     </div>)
   }
 }
 
-ReactDOM.render(<App />, document.getElementById('app'));
+ReactDOM.render(<App goals={dumbyData.dumbyGoals}/>, document.getElementById('app'));
