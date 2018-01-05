@@ -1,6 +1,6 @@
 var express = require('express');
 var bodyParser = require('body-parser');
-
+var path = require('path');
 var app = express();
 var session = require('express-session');
 var cookie = require('cookie-parser');
@@ -15,7 +15,6 @@ var restrict = (req, res, next) => {
     next();
   } else {
     req.session.error = 'Access denied!';
-    res.redirect('/login');
   }
 };
 
@@ -23,13 +22,13 @@ var restrict = (req, res, next) => {
 app.get('/', restrict, function (req, res) {
   // Serves up index.html user profile once we handle cookies
   if (err) { return res.sendStatus(400); } 
-  else { res.sendFile(path.join(__dirname + '/index.html')); }
+  else { res.sendFile(path.join(__dirname + './react-client/dist/index.html')); }
 });
 
 app.get('/login', function(req, res) {
   // Renders login page
   if (err) { return res.sendStatus(400); } 
-  else { res.json(); }
+  else { req.session.user = ''; }
 });
 
 // app.get('/goals', function(req, res) {
@@ -45,27 +44,34 @@ app.post('/login', function(req, res) {
   // with db to confirm or deny login
   if (err) { return res.sendStatus(400); } 
   else { 
-    // access database
-      // for each user in db
-        // if submitted username = db username
-          // if bcrypt.compareSync(db password, submitted password)
-            // req.session.user = req.body.username
-            // res.redirect('/')
-          // else password is wrong
-        // else user does not exist in db    
+    database.getAndVerifyUser(userObj, function(results) {
+      if ( results === true ) {
+        req.session.user = req.body.username;
+        res.json({username: req.body.username});
+      } else {
+        res.sendStatus(403);
+      }
+    }); 
   }
 });
 
 app.post('/signup', function(req, res) {
-  // Will add user to db, making sure
-  // they are not using a taken username
+  // Will add user to db, making sure they are not using a taken username
   if (err) { return res.sendStatus(400); } 
-  else { res.json(); }
+  else { 
+    database.insertUserIntoDB(userObj, function(results) {
+      res.sendStatus(200);
+    });
+  }
 });
 
 app.post('/goals', restrict, function(req, res) {
   // Will add goals to user in database
   if (err) { return res.sendStatus(400); } 
-  else { res.json(); }
+  else { 
+    database.insertGoalsIntoDB(goalsObj, function(results) {
+      res.json({goalId: results.insertId});
+    });
+  }
 });
 
