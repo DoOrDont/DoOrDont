@@ -1,9 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import $ from 'jquery';
 import List from './components/List.jsx';
 import dumbyData from '../../database-mysql/helpers/testData.js';
 import LogInForm from './components/LogInForm.jsx';
+
 
 class App extends React.Component {
   constructor(props) {
@@ -11,7 +13,7 @@ class App extends React.Component {
     this.state = { 
       goals: [],
       cookie: null
-    }
+    };
   }
 
   componentDidMount() {
@@ -20,7 +22,7 @@ class App extends React.Component {
       success: (data) => {
         this.setState({
           items: data
-        })
+        });
       },
       error: (err) => {
         console.log('err', err);
@@ -38,7 +40,7 @@ class App extends React.Component {
       success: (data) => {
         this.setState({
           cookie: data
-        })
+        });
       },
       error: (err) => {
         console.log('err', err);
@@ -49,16 +51,20 @@ class App extends React.Component {
   render () {
     if(this.state.cookie === null){
       return (
-        <LogInForm submitCreds={this.submitCreds.bind(this)/>
+        <MuiThemeProvider>
+          <LogInForm submitCreds={this.submitCreds.bind(this)}/>
+        </MuiThemeProvider>
       )
     } else {
       return (
-        <div>
-          <h1>Item List</h1>
-          {/* the below line is set to pull test data, change to 
-          this.state.goals when no longer needing dummy data*/}
-          <List goals={this.props.goals}/>
-        </div>
+        <MuiThemeProvider>
+          <div>
+            <h1>Item List</h1>
+            {/* the below line is set to pull test data, change to 
+            this.state.goals when no longer needing dummy data*/}
+            <List goals={this.props.goals}/>
+          </div>
+        </MuiThemeProvider>
       )
     }
   }
