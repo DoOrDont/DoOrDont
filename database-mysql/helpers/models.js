@@ -147,10 +147,12 @@ module.exports.insertUserIntoDB = (userObj, callback) => {
   const {username, password} = userObj;
   bcrypt.hash(password, null, null, (err, hash) => {
     connection.query('INSERT INTO users (username, password) VALUES (?, ?)', [username, hash], (err, results) => {
-      if(err) console.log(err);
-      
-      console.log('Inserted user:', results);
-      callback(results);
+      if(err) {
+        console.log(err);
+      } else {
+        console.log('Inserted user:', results);
+        callback(results);
+      }
     });
   });
 };
@@ -191,27 +193,27 @@ module.exports.getAndVerifyUser = (userObj, callback) => {
 
 
 // TESTS for inserting and retrieving user, adding goals, and checking if goals are complete
-let testGoal = {
-  'description': 'testing testing',
-  'punishment': 'bad bad',
-  'initiate': false,
-  'frequency': 6,
-  'username': 'Jon Doe'
-};
+// let testGoal = {
+//   'description': 'testing testing',
+//   'punishment': 'bad bad',
+//   'initiate': false,
+//   'frequency': 6,
+//   'username': 'Jon Doe'
+// };
 
-let testUser = {
-  'username': 'Jon Doe',
-  'password': 'superawesomepassword'
-};
+// let testUser = {
+//   'username': 'Jon Doe',
+//   'password': 'superawesomepassword'
+// };
 
-exports.insertUserIntoDB(testUser, () => {
-  exports.getAndVerifyUser(testUser, () => {
-    console.log('DONE putting and retrieving user');
-    exports.insertGoalsIntoDB(testGoal, () => {
-      exports.incrementGoalCounter(1, (result) => {
-        console.log(result);
-        exports.checkGoalCompletion(1, (result) => console.log('Final result:', result));
-      });
-    });
-  });
-});
+// exports.insertUserIntoDB(testUser, () => {
+//   exports.getAndVerifyUser(testUser, () => {
+//     console.log('DONE putting and retrieving user');
+//     exports.insertGoalsIntoDB(testGoal, () => {
+//       exports.incrementGoalCounter(1, (result) => {
+//         console.log(result);
+//         exports.checkGoalCompletion(1, (result) => console.log('Final result:', result));
+//       });
+//     });
+//   });
+// });
