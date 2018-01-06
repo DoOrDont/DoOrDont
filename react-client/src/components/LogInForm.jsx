@@ -7,7 +7,7 @@ export default class LogInForm extends React.Component {
     super(props);
     this.state = {
       userName: '', 
-      password: ''  
+      password: ''
     };
   } 
 

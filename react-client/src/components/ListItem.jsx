@@ -2,7 +2,10 @@ import React from 'react';
 
 const ListItem = (props) => (
   <div>
-    { props.goal.description }
+    <span>{ props.goal.description }</span>
+    <button onClick={() => {props.editGoal()}}>Edit</button>
+    <button onClick={() => {props.incrementGoal(props.index)}}>Incrememt</button>
+    <button onClick={() => {props.deleteGoal(props.index)}}>Delete</button>
   </div>
 )
 
