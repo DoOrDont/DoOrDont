@@ -48,7 +48,9 @@ app.get('/login', function(req, res) {
 
 app.get('/goals', function(req, res) {
   // Will fetch goals for the specific user
- res.json();
+  db.getGoalsForUser(req.body.username, (results) => {
+    res.json(results);
+  });
 });
 
 
@@ -75,10 +77,18 @@ app.post('/signup', function(req, res) {
 
 app.post('/goals', function(req, res) {
   // Will add goals to user in database
-  res.json();
+  db.insertGoalsIntoDB(req.body, (results) => {
+    res.json({goalId: results.insertId});
+  });
 });
 
-
+app.put('/goals', function(req, res) {
+  if(req.body.action === 'increment') {
+    db.incrementGoalCounter(req.body.goalId, (results) => {
+      res.json(results);
+    });
+  }
+});
 
 app.listen(3000, function() {
   console.log('listening on port 3000!');
