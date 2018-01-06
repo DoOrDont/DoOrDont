@@ -5,7 +5,7 @@ import $ from 'jquery';
 import List from './components/List.jsx';
 import dumbyData from '../../database-mysql/helpers/testData.js';
 import LogInForm from './components/LogInForm.jsx';
-
+import SignUpForm from './components/SignUpForm.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -18,10 +18,10 @@ class App extends React.Component {
 
   componentDidMount() {
     $.ajax({
-      url: '/items', 
+      url: '/', 
       success: (data) => {
         this.setState({
-          items: data
+          goals: data
         });
       },
       error: (err) => {
@@ -30,11 +30,11 @@ class App extends React.Component {
     });
   }
 
-  submitCreds(credObj) {
+  submitCreds(credObj, url) {
     console.log('about to send post');
-    $.ajax({
+    let ajaxObj = {
       type: 'POST',
-      url: '/login', 
+      url: url, 
       data: JSON.stringify(credObj),
       contentType: "application/json; charset=utf-8",
       dataType: "json",
@@ -46,14 +46,16 @@ class App extends React.Component {
       error: (err) => {
         console.log('err', err);
       }
-    });  
+    }
+    $.ajax(ajaxObj);  
   }
 
   render () {
     if(this.state.cookie === null){
       return (
         <MuiThemeProvider>
-          <LogInForm submitCreds={this.submitCreds.bind(this)}/>
+          {/*<LogInForm submitCreds={this.submitCreds.bind(this)}/>*/}
+          <SignUpForm submitCreds={this.submitCreds.bind(this)}/>
         </MuiThemeProvider>
       )
     } else {

@@ -44,6 +44,7 @@ app.post('/login', function(req, res) {
   database.getAndVerifyUser(userObj, function(results) {
     if ( results === true ) {
       req.session.user = req.body.username;
+      res.sendStatus(200);
     } else {
       res.sendStatus(403);
     }
