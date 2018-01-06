@@ -54,8 +54,8 @@ class App extends React.Component {
     if(this.state.cookie === null){
       return (
         <MuiThemeProvider>
-          {/*<LogInForm submitCreds={this.submitCreds.bind(this)}/>*/}
-          <SignUpForm submitCreds={this.submitCreds.bind(this)}/>
+          <LogInForm submitCreds={this.submitCreds.bind(this)}/>
+        {/*<SignUpForm submitCreds={this.submitCreds.bind(this)}/>*/}
         </MuiThemeProvider>
       )
     } else {

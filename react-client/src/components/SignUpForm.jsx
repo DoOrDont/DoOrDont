@@ -6,14 +6,14 @@ export default class SignUpForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      userName: '', 
+      username: '', 
       password: '',
       password2: ''  
     };
   } 
 
-  setUserName(e) {
-    this.setState({userName: e.target.value});
+  setUsername(e) {
+    this.setState({username: e.target.value});
   }
 
   setPassword(e) {
@@ -32,8 +32,8 @@ export default class SignUpForm extends React.Component {
             <TextField
               hintText="Username"
               id="username" 
-              onChange={this.setUserName.bind(this)} 
-              value={this.state.userName} 
+              onChange={this.setUsername.bind(this)} 
+              value={this.state.username} 
               type="text" 
               name="username"
             />
@@ -61,8 +61,8 @@ export default class SignUpForm extends React.Component {
               onClick={ () => (
                 this.props.submitCreds( 
                   {
-                    userName: this.state.userName,
-                    password: this.state.password
+                    'username': this.state.username,
+                    'password': this.state.password
                   },
                   '/signup'
                 )
