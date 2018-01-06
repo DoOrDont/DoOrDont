@@ -95,7 +95,11 @@ class App extends React.Component {
             {/* the below line is set to pull test data, change to 
             this.state.goals when no longer needing dummy data*/}
             <List goals={this.props.goals} incrementGoal={this.incrementGoal.bind(this)}
+<<<<<<< HEAD
             editGoal={this.editGoal.bind(this)} deleteGoal={this.deleteGoal.bind(this)}/>
+=======
+            editGoal={this.editGoal} deleteGoal={this.deleteGoal}/>
+>>>>>>> 1ffad416855d1e2d2dc105c66b5547260cceaa0d
           </div>
         </MuiThemeProvider>
       )
