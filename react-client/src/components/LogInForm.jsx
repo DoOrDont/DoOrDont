@@ -49,7 +49,8 @@ export default class LogInForm extends React.Component {
                   {
                     userName: this.state.userName,
                     password: this.state.password
-                  }
+                  },
+                  '/login'
                 )
               )} 
               value="Login"

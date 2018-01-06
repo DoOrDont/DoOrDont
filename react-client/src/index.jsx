@@ -18,10 +18,10 @@ class App extends React.Component {
 
   componentDidMount() {
     $.ajax({
-      url: '/items', 
+      url: '/', 
       success: (data) => {
         this.setState({
-          items: data
+          goals: data
         });
       },
       error: (err) => {
@@ -30,11 +30,11 @@ class App extends React.Component {
     });
   }
 
-  submitCreds(credObj) {
+  submitCreds(credObj, url) {
     console.log('about to send post');
-    $.ajax({
+    let ajaxObj = {
       type: 'POST',
-      url: '/login', 
+      url: url, 
       data: JSON.stringify(credObj),
       contentType: "application/json; charset=utf-8",
       dataType: "json",
@@ -46,7 +46,8 @@ class App extends React.Component {
       error: (err) => {
         console.log('err', err);
       }
-    });  
+    }
+    $.ajax(ajaxObj);  
   }
 
   render () {
