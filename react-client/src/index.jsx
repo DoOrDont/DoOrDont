@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import $ from 'jquery';
 import List from './components/List.jsx';
 import dumbyData from '../../database-mysql/helpers/testData.js';
 import LogInForm from './components/LogInForm.jsx';
 import SignUpForm from './components/SignUpForm.jsx';
-
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -97,8 +97,10 @@ class App extends React.Component {
     if(this.state.cookie === null){
       return (
         <MuiThemeProvider>
-          <LogInForm submitCreds={this.submitCreds.bind(this)}/>
-        {/*<SignUpForm submitCreds={this.submitCreds.bind(this)}/>*/}
+          <BrowserRouter>
+            <LogInForm submitCreds={this.submitCreds.bind(this)}/>
+            {/*<SignUpForm submitCreds={this.submitCreds.bind(this)}/>*/}
+          </BrowserRouter>
         </MuiThemeProvider>
       )
     } else {

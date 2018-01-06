@@ -32,7 +32,8 @@
     "mysql": "^2.13.0",
     "passport-twitter": "^1.0.4",
     "react": "^15.4.2",
-    "react-dom": "^15.4.2"
+    "react-dom": "^15.4.2",
+    "react-router-dom": "^4.2.2"
   },
   "jshintConfig": {
     "esversion": 6
