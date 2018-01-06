@@ -5,7 +5,7 @@ import $ from 'jquery';
 import List from './components/List.jsx';
 import dumbyData from '../../database-mysql/helpers/testData.js';
 import LogInForm from './components/LogInForm.jsx';
-
+import SignUpForm from './components/SignUpForm.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -54,7 +54,8 @@ class App extends React.Component {
     if(this.state.cookie === null){
       return (
         <MuiThemeProvider>
-          <LogInForm submitCreds={this.submitCreds.bind(this)}/>
+          {/*<LogInForm submitCreds={this.submitCreds.bind(this)}/>*/}
+          <SignUpForm submitCreds={this.submitCreds.bind(this)}/>
         </MuiThemeProvider>
       )
     } else {
