@@ -51,9 +51,9 @@ app.post('/login', function(req, res) {
 });
 
 app.post('/signup', function(req, res) {
-  // Will add user to db, making sure
-  // they are not using a taken username
-  res.json();
+  database.insertUserIntoDB(userObj, function(results) {
+    res.sendStatus(200);
+  });
 });
 
 app.post('/goals', function(req, res) {
