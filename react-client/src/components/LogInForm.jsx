@@ -1,5 +1,5 @@
 import React from 'react';
-import FlatButton from 'material-ui/FlatButton';
+import { RaisedButton, TextField } from 'material-ui';
 
 export default class LogInForm extends React.Component {
 
@@ -11,11 +11,11 @@ export default class LogInForm extends React.Component {
     };
   } 
 
-  setUserName(){
+  setUserName(e) {
     this.setState({userName: e.target.value});
   }
 
-  setPassword(){
+  setPassword(e) {
     this.setState({password: e.target.value});
   }
 
@@ -25,26 +25,26 @@ export default class LogInForm extends React.Component {
         <h2>Login</h2>
         <form action="/login" method="post">
             <div>
-              <label htmlFor="username">Username:</label>
-              <input 
+              <TextField
+                hintText="Username"
                 id="username" 
-                onChange={this.setUserName} 
+                onChange={this.setUserName.bind(this)} 
                 value={this.state.userName} 
                 type="text" 
                 name="username"
               />
             </div>
             <div>
-              <label htmlFor="password">Password:</label>
-              <input 
+              <TextField
+                hintText="Password" 
                 id="password" 
-                onChange={this.setPassword} 
+                onChange={this.setPassword.bind(this)} 
                 value={this.state.password} 
                 type="password" 
                 name="password"/>
             </div>
             <div>
-              <FlatButton
+              <RaisedButton
                 onClick={
                   this.props.submitCreds(
                     {
@@ -55,7 +55,7 @@ export default class LogInForm extends React.Component {
                 } 
                 value="Login"
               > Login
-              </FlatButton>
+              </RaisedButton>
             </div>
         </form>
         <p>
