@@ -16,6 +16,20 @@ class App extends React.Component {
     };
   }
 
+  incrementGoal(goalIndex) {
+    let newState = this.state.goals.slice();
+    newState[goalIndex].counter += 1;
+    this.setState({goals: newState});
+  }
+
+  editGoal(newGoal) {
+    //TODO: change goal
+  }
+
+  deleteGoal(goalInex) {
+    //TODO: delete goal
+  }
+
   componentDidMount() {
     $.ajax({
       url: '/', 
@@ -65,7 +79,8 @@ class App extends React.Component {
             <h1>Item List</h1>
             {/* the below line is set to pull test data, change to 
             this.state.goals when no longer needing dummy data*/}
-            <List goals={this.props.goals}/>
+            <List goals={this.props.goals} incrementGoal={this.incrementGoal.bind(this)}
+            editGoal={this.editGoal} deleteGoal={this.deleteGoal}/>
           </div>
         </MuiThemeProvider>
       )
