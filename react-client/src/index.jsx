@@ -31,6 +31,7 @@ class App extends React.Component {
   }
 
   submitCreds(credObj) {
+    console.log('about to send post');
     $.ajax({
       type: 'POST',
       url: '/login', 
