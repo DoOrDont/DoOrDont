@@ -23,20 +23,17 @@ var restrict = (req, res, next) => {
 app.get('/', function (req, res) {
   // Serves up index.html user profile
   // once we handle cookies
-  if (err) { return res.sendStatus(400); } 
-  else { res.json(); }
+  res.json();
 });
 
 app.get('/login', function(req, res) {
   // Renders login page
-  if (err) { return res.sendStatus(400); } 
-  else { res.json(); }
+  res.json();
 });
 
 app.get('/goals', function(req, res) {
   // Will fetch goals for the specific user
-  if (err) { return res.sendStatus(400); } 
-  else { res.json(); }
+ res.json();
 });
 
 
@@ -44,28 +41,23 @@ app.get('/goals', function(req, res) {
 app.post('/login', function(req, res) {
   // Will cross reference login credentials
   // with db to confirm or deny login
-  if (err) { return res.sendStatus(400); } 
-  else { 
-    database.getAndVerifyUser(userObj, function(results) {
-      if ( results === true ) {
-        req.session.user = req.body.username;
-      } else {
-        res.sendStatus(403);
-      }
-    }); 
-  }
+  database.getAndVerifyUser(userObj, function(results) {
+    if ( results === true ) {
+      req.session.user = req.body.username;
+    } else {
+      res.sendStatus(403);
+    }
+  }); 
 });
 
 app.post('/signup', function(req, res) {
   // Will add user to db, making sure
   // they are not using a taken username
-  if (err) { return res.sendStatus(400); } 
-  else { res.json(); }
+  res.json();
 });
 
 app.post('/goals', function(req, res) {
   // Will add goals to user in database
-  if (err) { return res.sendStatus(400); } 
-  else { res.json(); }
+  res.json();
 });
 
