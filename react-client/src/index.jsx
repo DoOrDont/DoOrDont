@@ -28,6 +28,21 @@ class App extends React.Component {
 
   deleteGoal(goalInex) {
     //TODO: delete goal
+    const deletedGoal = this.state.goals;
+    const newState = this.state.goals.slice(0, goalIndex).concat(this.state.goals.slice(goalIndex + 1));
+    $.ajax({
+      url: '/goals',
+      method: 'PUT',
+      data: JSON.stringify({action: 'delete', index: deletedGoal.id}),
+      contentType: "application/json; charset=utf-8",
+      dataType: "json",
+      success: (data) => {
+        this.setState({goals: newState});
+      },
+      error: (err) => {
+        console.log('err', err);
+      }
+    });
   }
 
   componentDidMount() {
@@ -80,7 +95,7 @@ class App extends React.Component {
             {/* the below line is set to pull test data, change to 
             this.state.goals when no longer needing dummy data*/}
             <List goals={this.props.goals} incrementGoal={this.incrementGoal.bind(this)}
-            editGoal={this.editGoal} deleteGoal={this.deleteGoal}/>
+            editGoal={this.editGoal.bind(this)} deleteGoal={this.deleteGoal.bind(this)}/>
           </div>
         </MuiThemeProvider>
       )
