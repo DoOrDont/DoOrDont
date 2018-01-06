@@ -45,7 +45,15 @@ app.post('/login', function(req, res) {
   // Will cross reference login credentials
   // with db to confirm or deny login
   if (err) { return res.sendStatus(400); } 
-  else { res.json(); }
+  else { 
+    database.getAndVerifyUser(userObj, function(results) {
+      if ( results === true ) {
+        req.session.user = req.body.username;
+      } else {
+        res.sendStatus(403);
+      }
+    }); 
+  }
 });
 
 app.post('/signup', function(req, res) {
