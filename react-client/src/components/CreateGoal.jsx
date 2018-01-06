@@ -19,6 +19,7 @@ class CreateGoal extends React.Component {
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleInputChange(stateKey, event) {
@@ -26,23 +27,33 @@ class CreateGoal extends React.Component {
     this.changeRoute[stateKey](event.target.value);
   }
 
+  handleSubmit(e) {
+    console.log('Form submitted');
+    //TODO: move user to punishment
+    e.preventDefault();
+  }
+
   render() {
     return (
       <div>
-        I want to 
-        <select onChange={(e) => this.handleInputChange('initiate', e)}>
-          <option value={true}>start</option>
-          <option value={false}>quit</option>
-        </select>
-        <input type="text" value={this.state.description} onChange={(e) => this.handleInputChange('description', e)} />
-        
-        at least
-        <input type="number" value={this.state.frequency} 
-        onChange={(e) => this.handleInputChange('frequency', e)}/> times a week. <br/>
+        <form onSubmit={this.handleSubmit}>
+          I want to 
+          <select onChange={(e) => this.handleInputChange('initiate', e)}>
+            <option value={true}>start</option>
+            <option value={false}>quit</option>
+          </select>
+          <input type="text" value={this.state.description} onChange={(e) => this.handleInputChange('description', e)} />
+          
+          at least
+          <input type="number" value={this.state.frequency} 
+          onChange={(e) => this.handleInputChange('frequency', e)}/> times a week. <br/>
 
-        My punishment will be:
-        <input type="text" value={this.state.punishment} 
-        onChange={(e) => this.handleInputChange('punishment', e)} />
+          <input type="submit" value="Next" />
+
+          {/* My punishment will be:
+          <input type="text" value={this.state.punishment} 
+          onChange={(e) => this.handleInputChange('punishment', e)} /> */}
+        </form>
       </div>
     )
   }
