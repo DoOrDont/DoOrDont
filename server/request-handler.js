@@ -1,41 +1,43 @@
 var express = require('express');
 var bodyParser = require('body-parser');
-var path = require('path');
+
 var app = express();
 var session = require('express-session');
 var cookie = require('cookie-parser');
 
 var database = require('../database-mysql/index.js');
 
-/***** Handles authorization ******/
+/***** Handles user credentials ******/
 var restrict = (req, res, next) => {
   // if user is logged in, serve index
-  // if user is not logged in, serve login
+  // else, error message
   if (req.session.user) {
     next();
   } else {
     req.session.error = 'Access denied!';
+    res.redirect('/login');
   }
 };
 
 /******* Handle GET requests ********/
-app.get('/', restrict, function (req, res) {
-  // Serves up index.html user profile once we handle cookies
+app.get('/', function (req, res) {
+  // Serves up index.html user profile
+  // once we handle cookies
   if (err) { return res.sendStatus(400); } 
-  else { res.sendFile(path.join(__dirname + './react-client/dist/index.html')); }
+  else { res.json(); }
 });
 
 app.get('/login', function(req, res) {
   // Renders login page
   if (err) { return res.sendStatus(400); } 
-  else { req.session.user = ''; }
+  else { res.json(); }
 });
 
-// app.get('/goals', function(req, res) {
-//   // Will fetch goals for the specific user
-//   if (err) { return res.sendStatus(400); } 
-//   else { res.json(); }
-// });
+app.get('/goals', function(req, res) {
+  // Will fetch goals for the specific user
+  if (err) { return res.sendStatus(400); } 
+  else { res.json(); }
+});
 
 
 /******* Handle POST requests ********/
@@ -55,22 +57,15 @@ app.post('/login', function(req, res) {
 });
 
 app.post('/signup', function(req, res) {
-  // Will add user to db, making sure they are not using a taken username
+  // Will add user to db, making sure
+  // they are not using a taken username
   if (err) { return res.sendStatus(400); } 
-  else { 
-    database.insertUserIntoDB(userObj, function(results) {
-      res.sendStatus(200);
-    });
-  }
+  else { res.json(); }
 });
 
-app.post('/goals', restrict, function(req, res) {
+app.post('/goals', function(req, res) {
   // Will add goals to user in database
   if (err) { return res.sendStatus(400); } 
-  else { 
-    database.insertGoalsIntoDB(goalsObj, function(results) {
-      res.json({goalId: results.insertId});
-    });
-  }
+  else { res.json(); }
 });
 
