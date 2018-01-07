@@ -87,6 +87,11 @@ app.put('/goals', function(req, res) {
     db.incrementGoalCounter(req.body.goalId, (results) => {
       res.json(results);
     });
+  } else if(req.body.action === 'delete') {
+    console.log('Deleting goal with id:', req.body.goalId);
+    db.deleteGoal(req.body.goalId, (results) => {
+      res.json(results);
+    });
   }
 });
 

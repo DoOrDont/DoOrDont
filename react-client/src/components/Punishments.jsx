@@ -17,6 +17,7 @@ const styles = {
 const cardStyles = {
   display: 'block',
   width: '30vw',
+  maxWidth: '200px',
   transitionDuration: '0.3s',
   height: '45vw'
 };
