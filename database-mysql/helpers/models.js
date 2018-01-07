@@ -126,6 +126,14 @@ module.exports.checkGoalCompletion = (goalId, callback) => {
   });
 };
 
+module.exports.deleteGoal = (goalId, callback) => {
+  connection.query('DELETE FROM goals WHERE id=?;', [goalId], (err, result) => {
+    if(err) throw err;
+
+    callback(result);
+  });
+};
+
 /************************************************
  Function:
    Inserts user info into database
