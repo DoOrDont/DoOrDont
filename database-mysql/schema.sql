@@ -13,6 +13,8 @@ CREATE TABLE `users` (
   `username` VARCHAR(50) UNIQUE NOT NULL,
   `password` VARCHAR(200) NOT NULL,
   `salt` VARCHAR(50) NOT NULL DEFAULT "",
+  `token` VARCHAR(200) DEFAULT NULL,
+  `tokenSecret` VARCHAR(200) DEFAULT NULL,
   PRIMARY KEY (`id`)
 );
 
