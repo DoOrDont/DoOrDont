@@ -218,7 +218,6 @@ module.exports.addTwitterCreds = (credsObj, callback) => {
                    [token, tokenSecret, username], (err, results) => {
     if(err) throw err;
 
-    console.log('UPDATE CRED results:', resutls);
     callback(results);
   });
 };
@@ -251,3 +250,5 @@ module.exports.addTwitterCreds = (credsObj, callback) => {
 //     });
 //   });
 // });
+
+// exports.addTwitterCreds({ username: 'Jon', token: 'testToken', tokenSecret: 'testSecret' }, () => { });
