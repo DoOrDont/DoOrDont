@@ -3,6 +3,8 @@ import ListItem from './ListItem.jsx';
 import $ from 'jquery';
 import dumbyData from './testData.js';
 import { Link } from 'react-router-dom';
+import { RaisedButton, TextField } from 'material-ui';
+const axios = require('axios');
 
 
 
@@ -63,6 +65,7 @@ class List extends React.Component {
     $.ajax({
       url: '/goals',
       success: (data) => {
+        console.log('didMount-goals:', this.state.goals);
         this.setState({
           goals: data
         });
@@ -76,6 +79,11 @@ class List extends React.Component {
   render () {
     return (
       <div>
+        <Link to="/login">
+          <RaisedButton>
+            Sign Out
+          </RaisedButton>
+        </Link>
         <h4> List Component </h4>
           There are { this.state.goals.length } items.
           { this.state.goals.map((goal, index) => (
@@ -88,10 +96,11 @@ class List extends React.Component {
               deleteGoal={this.deleteGoal.bind(this)}
             />
           ))}
+        <br/><br/>
         <Link to="/creategoal">
-          <button type="button">
-            Create an Goal
-          </button>
+          <RaisedButton>
+            Create a Goal
+          </RaisedButton>
         </Link>
       </div>
     )

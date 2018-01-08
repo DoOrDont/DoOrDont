@@ -94,7 +94,11 @@ export default class SignUpForm extends React.Component {
             > Sign up
             </RaisedButton>
           </div>
-          <Link to="/login">Log In &rarr;</Link>
+          <Link to="/login">
+            <RaisedButton>
+              Log In 
+            </RaisedButton>
+          </Link>
       </div>
     )
   }

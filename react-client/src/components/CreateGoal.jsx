@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { RaisedButton } from 'material-ui';
+import { RaisedButton, TextField } from 'material-ui';
 
 class CreateGoal extends React.Component {
   constructor(props) {

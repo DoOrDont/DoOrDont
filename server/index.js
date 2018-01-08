@@ -48,8 +48,8 @@ app.get('/login', function(req, res) {
 
 app.get('/goals', function(req, res) {
   // Will fetch goals for the specific user
+  console.log('req.body:', req.body)
   db.getGoalsForUser(req.body.username, (results) => {
-  //db.getGoalsForUser(req.body.username, (results) => {
     res.json(results);
   });
 });
