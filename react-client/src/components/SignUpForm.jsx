@@ -84,7 +84,7 @@ export default class SignUpForm extends React.Component {
               onClick={  () => (
                 this.submitCreds(
                   {
-                    userName: this.state.userName,
+                    username: this.state.username,
                     password: this.state.password
                   },
                   '/signup'
