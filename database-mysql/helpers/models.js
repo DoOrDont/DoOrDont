@@ -126,6 +126,18 @@ module.exports.checkGoalCompletion = (goalId, callback) => {
   });
 };
 
+/************************************************
+ Function:
+   Deletes single goal from db
+
+ Inputs:
+   goalId Number representing the id of desired goal
+
+ Output:
+   None.
+   The callback will be given an Object metadata
+   about the deletion.
+************************************************/
 module.exports.deleteGoal = (goalId, callback) => {
   connection.query('DELETE FROM goals WHERE id=?;', [goalId], (err, result) => {
     if(err) throw err;
@@ -153,14 +165,16 @@ module.exports.deleteGoal = (goalId, callback) => {
 ************************************************/
 module.exports.insertUserIntoDB = (userObj, callback) => {
   const {username, password} = userObj;
-  bcrypt.hash(password, null, null, (err, hash) => {
-    connection.query('INSERT INTO users (username, password) VALUES (?, ?)', [username, hash], (err, results) => {
-      if(err) {
-        console.log(err);
-      } else {
-        console.log('Inserted user:', results);
-        callback(results);
-      }
+  bcrypt.genSalt(10, (err, salt) => {
+    if(err) throw err;
+    bcrypt.hash(password, salt, null, (err, hash) => {
+      connection.query('INSERT INTO users (username, password, salt) VALUES (?, ?, ?)', [username, hash, salt], (err, results) => {
+        if(err) {
+          console.log(err);
+        } else {
+          callback(results);
+        }
+      });
     });
   });
 };
@@ -187,12 +201,11 @@ module.exports.getAndVerifyUser = (userObj, callback) => {
   connection.query('SELECT * FROM users WHERE username=?', [username], (err, results) => {
     if(err) throw err;
     
-    bcrypt.compare(password, results.password, (res) => {
-      if(res) {
-        console.log('Password is a match!');
+    bcrypt.hash(password, results[0].salt, null, (err, hash) => {
+      if(err) throw err;
+      if(results[0].password === hash) {
         callback(true);
       } else {
-        console.log('Password is NOT a match!');
         callback(false);
       }
     });
