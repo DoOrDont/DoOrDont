@@ -42,11 +42,6 @@ app.get('/', function (req, res) {
   res.json();
 });
 
-app.get('/login', function(req, res) {
-  // Renders login page
-  res.json();
-});
-
 app.get('/goals', function(req, res) {
   // Will fetch goals for the specific user
   console.log('req.body:', req.body)
