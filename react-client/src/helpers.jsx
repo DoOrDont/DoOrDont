@@ -26,7 +26,7 @@ const submitCreds = (credObj, url) => {
       .then(function (response) {
           if(response.status === 200){
             console.log(response);
-            
+            window.sessionStorage.accessToken = response.data.token;
           }
         })
       .catch(function (error) {
