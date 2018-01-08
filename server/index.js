@@ -2,6 +2,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var cookie = require('cookie-parser');
+var path = require('path');
 
 var database = require('../database-mysql');
 var db = require('../database-mysql/helpers/models.js');
@@ -94,6 +95,10 @@ app.put('/goals', function(req, res) {
       res.json(results);
     });
   }
+});
+
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname + '/../react-client/dist/index.html'));
 });
 
 const PORT = process.env.PORT || 3000;
