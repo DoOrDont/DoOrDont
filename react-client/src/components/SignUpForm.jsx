@@ -43,7 +43,7 @@ export default class SignUpForm extends React.Component {
       error: (err) => {
         console.log('err', err);
       }
-    }
+    };
     $.ajax(ajaxObj);  
   }
 

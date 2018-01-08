@@ -66,7 +66,6 @@ class List extends React.Component {
     $.ajax({
       url: '/goals',
       success: (data) => {
-        console.log('didMount-goals:', this.state.goals);
         this.setState({
           goals: data
         });
