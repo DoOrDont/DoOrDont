@@ -3,6 +3,7 @@ var bodyParser = require('body-parser');
 var session = require('express-session');
 var cookie = require('cookie-parser');
 var path = require('path');
+var jwt = require('jsonwebtoken');
 
 var database = require('../database-mysql');
 var db = require('../database-mysql/helpers/models.js');
@@ -58,6 +59,7 @@ app.post('/login', function(req, res) {
   db.getAndVerifyUser(req.body, function(results) {
     if ( results === true ) {
       req.session.user = req.body.username;
+      
       res.sendStatus(200);
     } else {
       res.sendStatus(403);
