@@ -1,5 +1,9 @@
 import React from 'react';
 import { RaisedButton, TextField } from 'material-ui';
+import { Redirect } from 'react-router';
+
+import { Link } from 'react-router-dom';
+import helpers from '../helpers.jsx';
 
 export default class LogInForm extends React.Component {
 
@@ -18,7 +22,7 @@ export default class LogInForm extends React.Component {
   setPassword(e) {
     this.setState({password: e.target.value});
   }
-
+  
   render(){
     return (
       <div>
@@ -44,8 +48,8 @@ export default class LogInForm extends React.Component {
           </div>
           <div>
             <RaisedButton
-              onClick={ () => (
-                this.props.submitCreds( 
+              onClick={  () => (
+                helpers.submitCreds(
                   {
                     userName: this.state.userName,
                     password: this.state.password
@@ -57,11 +61,13 @@ export default class LogInForm extends React.Component {
             > Login
             </RaisedButton>
           </div>
-        <p>
-          <a href="/signup">Create an Account &rarr;</a>
-        </p>
+          <Link to="/signup">
+            <RaisedButton>
+              Create an Account
+            </RaisedButton>
+          </Link>
       </div>
-    )
+    );
   }
 } 
 

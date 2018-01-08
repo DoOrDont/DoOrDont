@@ -2,6 +2,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var cookie = require('cookie-parser');
+var path = require('path');
 
 var database = require('../database-mysql');
 var db = require('../database-mysql/helpers/models.js');
@@ -41,13 +42,9 @@ app.get('/', function (req, res) {
   res.json();
 });
 
-app.get('/login', function(req, res) {
-  // Renders login page
-  res.json();
-});
-
 app.get('/goals', function(req, res) {
   // Will fetch goals for the specific user
+  console.log('req.body:', req.body)
   db.getGoalsForUser(req.body.username, (results) => {
     res.json(results);
   });
@@ -87,10 +84,21 @@ app.put('/goals', function(req, res) {
     db.incrementGoalCounter(req.body.goalId, (results) => {
       res.json(results);
     });
+  } else if(req.body.action === 'delete') {
+    console.log('Deleting goal with id:', req.body.goalId);
+    db.deleteGoal(req.body.goalId, (results) => {
+      res.json(results);
+    });
   }
 });
 
-app.listen(3000, function() {
-  console.log('listening on port 3000!');
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname + '/../react-client/dist/index.html'));
+});
+
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, function() {
+  console.log('listening on port PORT!');
 });
 

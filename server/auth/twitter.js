@@ -7,9 +7,11 @@ var config = require('./config.js');
 passport.use(new TwitterStrategy({
     consumerKey: config.TWITTER_CONSUMER_KEY,
     consumerSecret: config.TWITTER_CONSUMER_SECRET,
-    // callbackURL: "http://127.0.0.1:3000/auth/twitter/callback"
+    callbackURL: "http://127.0.0.1:3000/auth/twitter/callback"
   },
   function(token, tokenSecret, profile, cb) {
+    // send token to db to be stored with the corresponding user in the db
+
     // User.findOrCreate({ twitterId: profile.id }, function (err, user) {
       // return cb(err, user);
     // });
@@ -23,18 +25,19 @@ module.exports.serialize = passport.serializeUser(function(user, done) {
 
 // Will query the user record by ID from the database when deserializing
 module.exports.deserialize = passport.deserializeUser(function(id, done) {
-//  User.findById(id, function (err, user) {
-//    done(err, user);
-//  });
+  connection.query("SELECT * FROM users WHERE id = ?", [id], function(err, rows){ 
+    done(err, rows[0]);
+  });
 });
 
 /************ ROUTING **************/
-app.get('/auth/twitter',
-  passport.authenticate('twitter'));
-
+app.get('/auth/twitter', 
+         passport.authenticate('twitter'),
+         // optional handler
+         function(req, res) {}); 
 app.get('/auth/twitter/callback', 
-  passport.authenticate('twitter', { failureRedirect: '/login' }),
-  function(req, res) {
-    // Successful authentication, redirect home.
-    res.redirect('/');
-  });
+         passport.authenticate('twitter', { 
+                                successRedirect: '/',
+                                failureRedirect: '/login' }),
+         // optional handler
+         function(req, res) {});
