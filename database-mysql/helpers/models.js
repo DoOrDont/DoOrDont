@@ -126,6 +126,18 @@ module.exports.checkGoalCompletion = (goalId, callback) => {
   });
 };
 
+/************************************************
+ Function:
+   Deletes single goal from db
+
+ Inputs:
+   goalId Number representing the id of desired goal
+
+ Output:
+   None.
+   The callback will be given an Object metadata
+   about the deletion.
+************************************************/
 module.exports.deleteGoal = (goalId, callback) => {
   connection.query('DELETE FROM goals WHERE id=?;', [goalId], (err, result) => {
     if(err) throw err;
