@@ -10,13 +10,13 @@ export default class LogInForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      userName: '', 
+      username: '', 
       password: ''
     };
   } 
 
-  setUserName(e) {
-    this.setState({userName: e.target.value});
+  setUsername(e) {
+    this.setState({username: e.target.value});
   }
 
   setPassword(e) {
@@ -31,8 +31,8 @@ export default class LogInForm extends React.Component {
             <TextField
               hintText="Username"
               id="username" 
-              onChange={this.setUserName.bind(this)} 
-              value={this.state.userName} 
+              onChange={this.setUsername.bind(this)} 
+              value={this.state.username} 
               type="text" 
               name="username"
             />
@@ -51,7 +51,7 @@ export default class LogInForm extends React.Component {
               onClick={  () => (
                 helpers.submitCreds(
                   {
-                    userName: this.state.userName,
+                    username: this.state.username,
                     password: this.state.password
                   },
                   '/login'

@@ -3,10 +3,14 @@ var bodyParser = require('body-parser');
 var session = require('express-session');
 var cookie = require('cookie-parser');
 var path = require('path');
+var jwt = require('jsonwebtoken');
 
 var database = require('../database-mysql');
 var db = require('../database-mysql/helpers/models.js');
 //var requestHandler = require('./request-handler.js');
+
+const PORT = process.env.PORT || 3000;
+const TOKEN_SECRET = process.env.TOKEN_SECRET || 'superSecret';
 
 var app = express();
 
@@ -44,7 +48,6 @@ app.get('/', function (req, res) {
 
 app.get('/goals', function(req, res) {
   // Will fetch goals for the specific user
-  console.log('req.body:', req.body)
   db.getGoalsForUser(req.body.username, (results) => {
     res.json(results);
   });
@@ -58,7 +61,22 @@ app.post('/login', function(req, res) {
   db.getAndVerifyUser(req.body, function(results) {
     if ( results === true ) {
       req.session.user = req.body.username;
-      res.sendStatus(200);
+      res.status(200);
+
+      //todo: function that checks for twitter token
+      const payload = {
+            username: req.body.username,
+            twitterTokenPresent: false
+      };
+      
+      var token = jwt.sign(payload, 'superSecret');
+
+      // return the information including token as JSON
+      res.json({
+        token: token
+      });
+      
+
     } else {
       res.sendStatus(403);
     }

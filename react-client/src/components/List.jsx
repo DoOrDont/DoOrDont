@@ -5,6 +5,7 @@ import dumbyData from './testData.js';
 import { Link } from 'react-router-dom';
 import { RaisedButton, TextField } from 'material-ui';
 const axios = require('axios');
+const jwtDecode = require('jwt-decode');
 
 
 
@@ -65,7 +66,6 @@ class List extends React.Component {
     $.ajax({
       url: '/goals',
       success: (data) => {
-        console.log('didMount-goals:', this.state.goals);
         this.setState({
           goals: data
         });
