@@ -1,5 +1,7 @@
 import React from 'react';
 import { RaisedButton, TextField } from 'material-ui';
+import $ from 'jquery';
+import { Link } from 'react-router-dom';
 
 export default class SignUpForm extends React.Component {
 
@@ -22,6 +24,27 @@ export default class SignUpForm extends React.Component {
 
    setPassword2(e) {
     this.setState({password2: e.target.value});
+  }
+  
+  submitCreds(credObj, url) {
+    console.log('about to send post');
+    let ajaxObj = {
+      type: 'POST',
+      url: url, 
+      data: JSON.stringify(credObj),
+      contentType: "application/json; charset=utf-8",
+      dataType: "json",
+      success: (data) => {
+        console.log(data);
+        // this.setState({
+        //   cookie: data
+        // });
+      },
+      error: (err) => {
+        console.log('err', err);
+      }
+    }
+    $.ajax(ajaxObj);  
   }
 
   render(){
@@ -58,19 +81,20 @@ export default class SignUpForm extends React.Component {
           </div>
           <div>
             <RaisedButton
-              onClick={ () => (
-                this.props.submitCreds( 
+              onClick={  () => (
+                this.submitCreds(
                   {
-                    'username': this.state.username,
-                    'password': this.state.password
+                    userName: this.state.userName,
+                    password: this.state.password
                   },
                   '/signup'
                 )
               )} 
-              value="SignUp"
+              value="Signup"
             > Sign up
             </RaisedButton>
           </div>
+          <Link to="/login">Log In &rarr;</Link>
       </div>
     )
   }

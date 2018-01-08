@@ -1,11 +1,11 @@
 const mysql = require('mysql');
 
 const DB_PATH = process.env.DB_PATH || 'localhost';
-const PASS = process.env.PASS || 'password';
+const PASS = process.env.PASS || '';
 
 const connection = mysql.createConnection({
   host: DB_PATH,
-  user: 'root',
+  user: 'ranched',
   password: PASS,
   database: 'doordontdb'
 });
