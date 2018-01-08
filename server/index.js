@@ -48,6 +48,7 @@ app.get('/login', function(req, res) {
 
 app.get('/goals', function(req, res) {
   // Will fetch goals for the specific user
+  console.log('req.body:', req.body)
   db.getGoalsForUser(req.body.username, (results) => {
     res.json(results);
   });
@@ -95,7 +96,9 @@ app.put('/goals', function(req, res) {
   }
 });
 
-app.listen(3000, function() {
-  console.log('listening on port 3000!');
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, function() {
+  console.log('listening on port PORT!');
 });
 
