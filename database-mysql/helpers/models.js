@@ -212,6 +212,16 @@ module.exports.getAndVerifyUser = (userObj, callback) => {
   });
 };
 
+module.exports.addTwitterCreds = (credsObj, callback) => {
+  const{username, token, tokenSecret} = credsObj;
+  connection.query('UPDATE users SET token=?, tokenSecret=? WHERE username=?;', 
+                   [token, tokenSecret, username], (err, results) => {
+    if(err) throw err;
+
+    callback(results);
+  });
+};
+
 
 // TESTS for inserting and retrieving user, adding goals, and checking if goals are complete
 // let testGoal = {
@@ -233,8 +243,12 @@ module.exports.getAndVerifyUser = (userObj, callback) => {
 //     exports.insertGoalsIntoDB(testGoal, () => {
 //       exports.incrementGoalCounter(1, (result) => {
 //         console.log(result);
-//         exports.checkGoalCompletion(1, (result) => console.log('Final result:', result));
+//         exports.checkGoalCompletion(1, (result) => {
+//           exports.addTwitterCreds({username: 'Jon', token: 'testToken', tokenSecret: 'testSecret'}, () => {});
+//         });
 //       });
 //     });
 //   });
 // });
+
+// exports.addTwitterCreds({ username: 'Jon', token: 'testToken', tokenSecret: 'testSecret' }, () => { });
