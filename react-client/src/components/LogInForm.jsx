@@ -82,10 +82,11 @@ export default class LogInForm extends React.Component {
             > Login
             </RaisedButton>
           </div>
-        <p>
-          <Link to="/signup">Create an Account &rarr;</Link>
-          {/*<a href="/signup">Create an Account &rarr;</a>*/}
-        </p>
+          <Link to="/signup">
+            <button type="button">
+              Create an Account
+            </button>
+          </Link>
       </div>
     );
   }

@@ -5,7 +5,7 @@ const PASS = process.env.PASS || '';
 
 const connection = mysql.createConnection({
   host: DB_PATH,
-  user: 'ranched',
+  user: 'root',
   password: PASS,
   database: 'doordontdb'
 });

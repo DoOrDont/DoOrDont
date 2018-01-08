@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { RaisedButton } from 'material-ui';
 
 class CreateGoal extends React.Component {
   constructor(props) {
@@ -54,6 +56,11 @@ class CreateGoal extends React.Component {
           <input type="text" value={this.state.punishment} 
           onChange={(e) => this.handleInputChange('punishment', e)} /> */}
         </form>
+        <Link to="/">
+          <button type="button">
+            Cancel
+          </button>
+        </Link>
       </div>
     )
   }

@@ -49,6 +49,7 @@ app.get('/login', function(req, res) {
 app.get('/goals', function(req, res) {
   // Will fetch goals for the specific user
   db.getGoalsForUser(req.body.username, (results) => {
+  //db.getGoalsForUser(req.body.username, (results) => {
     res.json(results);
   });
 });
@@ -95,7 +96,9 @@ app.put('/goals', function(req, res) {
   }
 });
 
-app.listen(process.env.PORT, function() {
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, function() {
   console.log('listening on port PORT!');
 });
 

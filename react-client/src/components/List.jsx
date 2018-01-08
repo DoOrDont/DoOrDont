@@ -2,6 +2,7 @@ import React from 'react';
 import ListItem from './ListItem.jsx';
 import $ from 'jquery';
 import dumbyData from './testData.js';
+import { Link } from 'react-router-dom';
 
 
 
@@ -87,6 +88,11 @@ class List extends React.Component {
               deleteGoal={this.deleteGoal.bind(this)}
             />
           ))}
+        <Link to="/creategoal">
+          <button type="button">
+            Create an Goal
+          </button>
+        </Link>
       </div>
     )
   }

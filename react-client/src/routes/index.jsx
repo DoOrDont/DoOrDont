@@ -13,7 +13,7 @@ export default () => (
   <MuiThemeProvider>
     <BrowserRouter>
       <div>
-        <Route path='/' exact component={LogInForm} />
+        <Route path='/' exact component={List} />
         <Route path='/login' exact component={LogInForm} />
         <Route path='/signup' exact component={SignUpForm} />
         <Route path='/creategoal' exact component={CreateGoal} />
