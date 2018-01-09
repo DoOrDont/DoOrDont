@@ -4,6 +4,7 @@ var Strategy = require('passport-twitter').Strategy;
 
 var config = require('./config.js');
 
+
 passport.use(new TwitterStrategy({
     consumerKey: config.TWITTER_CONSUMER_KEY,
     consumerSecret: config.TWITTER_CONSUMER_SECRET,
@@ -11,7 +12,7 @@ passport.use(new TwitterStrategy({
   },
   function(token, tokenSecret, profile, cb) {
     // send token to db to be stored with the corresponding user in the db
-
+    db.addTwitterCreds();
     // User.findOrCreate({ twitterId: profile.id }, function (err, user) {
       // return cb(err, user);
     // });
