@@ -36,6 +36,7 @@ export default class LogInForm extends React.Component {
         })
         .catch(function (error) {
           console.log(error);
+          alert('Incorrect username or password');
         });
     }
   }
