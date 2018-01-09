@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { RaisedButton, TextField } from 'material-ui';
+const jwtDecode = require('jwt-decode');
 
 class CreateGoal extends React.Component {
   constructor(props) {
@@ -10,7 +11,8 @@ class CreateGoal extends React.Component {
       description: '',
       punishment: '',
       initiate: true,
-      frequency: ''
+      frequency: '',
+      submitted: false
     };
 
     this.changeRoute = {
@@ -36,12 +38,20 @@ class CreateGoal extends React.Component {
   handleSubmit(e) {
     console.log('Form submitted');
     //TODO: move user to punishment
+    let goalObj = JSON.parse(window.sessionStorage.getItem('goalObj'));
+    let token = window.sessionStorage.getItem('accessToken');
+    let tokenObj = jwtDecode(token);
+    goalObj.username = tokenObj.username;
+    this.setState({ submitted: true })
     e.preventDefault();
+
   }
 
   render() {
     return (
+      
       <div>
+        {this.state.submitted === true ? <Redirect to="/punishment" /> : ''}
         <form onSubmit={this.handleSubmit}>
           I want to 
           <select onChange={(e) => this.handleInputChange('initiate', e)}>

@@ -21,11 +21,12 @@ After changes and before submitting pull request
 4. if squashing commits, `git rebase -i` and pick commits
 5. `git pull --rebase upstream master`
 6. fix conflicts if necessary
-7. if conflicts were fixed, `git rebase --continue` 
-8. if conflicts were fixed, `git add` changed files
-9. if conflicts were fixed, `git commit`
-10. `git push origin master`
-11. from github fork, create pull request
+7. if conflicts were fixed, `git add` changed files
+8. if conflicts were fixed, `git rebase --continue` 
+9. --continue working if necessary--
+10. `git commit`
+11. `git push origin master`
+12. from github fork, create pull request
 
 #Pull Request Process
 
