@@ -24,6 +24,10 @@ class CreateGoal extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  componentDidMount() {
+    window.sessionStorage.setItem('goalObj', '{}');
+  }
+
   handleInputChange(stateKey, event) {
     console.log(this.state);
     this.changeRoute[stateKey](event.target.value);
