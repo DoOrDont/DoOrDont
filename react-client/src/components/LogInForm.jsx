@@ -4,6 +4,7 @@ import { Redirect } from 'react-router';
 
 import { Link } from 'react-router-dom';
 // import helpers from '../helpers.jsx';
+const axios = require('axios');
 
 export default class LogInForm extends React.Component {
 

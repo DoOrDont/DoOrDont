@@ -17,16 +17,22 @@ const styles = {
 const cardStyles = {
   display: 'block',
   width: '30vw',
-  maxWidth: '200px',
+  maxWidth: '250px',
   transitionDuration: '0.3s',
-  height: '45vw'
+  height: '45vw',
+  maxHeight: '300px'
 };
 
 const punishments = [
   {
-    title: 'Twitter',
+    title: 'twitter',
     icon: 'https://abs-0.twimg.com/responsive-web/web/ltr/icon-ios.a9cd885bccbcaf2f.png',
     description: 'Post your failures to Twitter!'
+  },
+  {
+    title: 'email',
+    icon: 'http://www.amalacademy.org/images/mail.png',
+    description: 'Get an angry email!'
   }
 ];
 
@@ -37,13 +43,19 @@ const Punishments = (props) => (
       style={styles.gridList}
     >
       {punishments.map((pun) => (
-        <GridTile key={pun.icon}>
-          <Card style={cardStyles}>
+        <GridTile key={pun.icon} onClick={() => {
+            let goal = JSON.parse(window.localStorage.getItem('goalObj'));
+            goal.punishment = pun.title;
+            console.log('GOAL:', goal);
+            console.log('Again');
+            window.localStorage.setItem('goalObj', JSON.stringify(goal));
+          }}>
+          <Card style={cardStyles} >
             <CardHeader
               title={pun.title}
             />
             <CardMedia>
-              <img src={pun.icon} alt="twitter icon"/>
+              <img src={pun.icon} alt={pun.title}/>
             </CardMedia>
             <CardText>
               {pun.description}
