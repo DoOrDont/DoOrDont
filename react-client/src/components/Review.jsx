@@ -16,17 +16,21 @@ class Review extends React.Component {
 
   componentDidMount() {
     let goal = JSON.parse(sessionStorage.getItem('goalObj'));
-    this.setState('goal', goal);
+    this.setState({goal});
   }
 
 
   handleReviewSubmit(e) {
-    $.ajax({
-      type: 'POST',
-      url: url,
-      data: {goal: this.state.goal},
-      success: success,
-    });
+    axios.post('/goals', {goal: this.state.goal})
+      .then((response) => {
+        if (response.status === 200) {
+          // response.body.goalId
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    e.preventDefault();
   }
 
   handleSuccess() {
@@ -42,24 +46,16 @@ class Review extends React.Component {
           </h2>
         </div>
         <div id="goalPunishment">
-          <h3>If I don't accomplish this, Do Or Don't will 
-            {if (this.state.goal.punishment === 'email') {
-              return (`<h3>
-                        send me a motivational email to get me back on track.
-                      </h3>`);
-            } else if (this.state.goal.punishment === 'twitter') {
-              return (`<h3>
-                        post a tweet on my Twitter account for all my followers to see.
-                      </h3>`);
-            }}
-          </h3>
+          <h3>If I don't accomplish this, Do Or Don't will</h3>
+          {this.state.goal.punishment === 'email' ? 
+          <h3>send me a motivational email to get me back on track.</h3> :
+          <h3>post a tweet on my Twitter account for all my followers to see.</h3>}
         </div>
         <div id="submission">
           <a href='/'>Cancel</a>
           <RaisedButton onClick={this.handleReviewSubmit}>Submit</RaisedButton>
+        </div>
       </div>
-    
-
     )
   }
 }

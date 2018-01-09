@@ -28,9 +28,9 @@ module.exports.scheduleEmail = (email, goalId) => {
       if(!results.metGoal) {
         let message;
         if(results.initiate) {
-          message = `You promised to do this at least ${results.frequency} times, but you only did it ${results.counter} times!`;
+          message = `You promised to "${resutls.description}" at least ${results.frequency} times, but you only did it ${results.counter} times!`;
         } else {
-          message = `You promised to do this less than ${results.frequency} times, but you did it ${results.counter} times!`;
+          message = `You promised to "${resutls.description}" less than ${results.frequency} times, but you did it ${results.counter} times!`;
         }
 
         const mailOptions = {

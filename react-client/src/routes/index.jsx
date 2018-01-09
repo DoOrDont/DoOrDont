@@ -7,6 +7,7 @@ import LogInForm from '../components/LogInForm.jsx';
 import SignUpForm from '../components/SignUpForm.jsx';
 import CreateGoal from '../components/CreateGoal.jsx';
 import Punishments from '../components/Punishments.jsx';
+import Review from '../components/Review.jsx';
 
 
 export default () => (
@@ -18,6 +19,7 @@ export default () => (
         <Route path='/signup' exact component={SignUpForm} />
         <Route path='/creategoal' exact component={CreateGoal} />
         <Route path='/punishment' exact component={Punishments} />
+        <Route path='/review' exact component={Review} />
       </div>
     </BrowserRouter>
   </MuiThemeProvider>
