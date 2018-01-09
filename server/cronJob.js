@@ -1,5 +1,6 @@
 const schedule = require('node-schedule');
 const nodemailer = require('nodemailer');
+const db = require('../database-mysql/helpers/models.js');
 
 const transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -9,16 +10,9 @@ const transporter = nodemailer.createTransport({
   }
 });
 
-const mailOptions = {
-  from: 'doordont.team@gmail.com',
-  to: 'jontmichie@gmail.com',
-  subject: 'Sending Email using Node.js',
-  text: 'That was easy!'
-};
-
-
-module.exports.scheduleEmail = (email, message) => {
+module.exports.scheduleEmail = (email, goalId) => {
   const rule = new schedule.RecurrenceRule();
+
   //for production:
   // rule.dayOfWeek = 0;
   // rule.hour = 18;
@@ -29,16 +23,35 @@ module.exports.scheduleEmail = (email, message) => {
   
   const job = schedule.scheduleJob(rule, () => {
     console.log('email:', email);
-    console.log('message', message);
-    transporter.sendMail(mailOptions, function (error, info) {
-      if (error) {
-        console.log(error);
-      } else {
-        console.log('Email sent: ' + info.response);
+    db.checkGoalCompletion(goalId, (results) => {
+
+      if(!results.metGoal) {
+        let message;
+        if(results.initiate) {
+          message = `You promised to do this at least ${results.frequency} times, but you only did it ${results.counter} times!`;
+        } else {
+          message = `You promised to do this less than ${results.frequency} times, but you did it ${results.counter} times!`;
+        }
+
+        const mailOptions = {
+          from: 'doordont.team@gmail.com',
+          to: email,
+          subject: 'Goal update',
+          text: message
+        };
+  
+        console.log('Job results:', results);
+        transporter.sendMail(mailOptions, function (error, info) {
+          if (error) {
+            console.log(error);
+          } else {
+            console.log('Email sent: ' + info.response);
+          }
+        });
       }
     });
   });
 };
 
 //Test
-// exports.scheduleEmail('jon@example.com', 'Hello World');
+// exports.scheduleEmail('jontmichie@gmail.com', 3);
