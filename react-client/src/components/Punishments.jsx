@@ -45,13 +45,13 @@ const Punishments = (props) => (
       {punishments.map((pun) => (
         <GridTile key={pun.icon}>
           <Card style={cardStyles} onClick={() => {
-            let goal = JSON.parse(window.localStorage.getItem('goalObj'));
+            let goal = JSON.parse(window.sessionStorage.getItem('goalObj'));
             if (!goal) {
               goal = {};
             }
             goal.punishment = pun.title;
             console.log('GOAL:', goal);
-            window.localStorage.setItem('goalObj', JSON.stringify(goal));
+            window.sessionStorage.setItem('goalObj', JSON.stringify(goal));
           }}>
             <CardHeader
               title={pun.title}

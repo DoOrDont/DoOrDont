@@ -1,7 +1,8 @@
 import React from 'react';
 import { RaisedButton, FlatButton, TextField, Dialog } from 'material-ui';
 import $ from 'jquery';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
+const axios = require('axios');
 
 export default class SignUpForm extends React.Component {
 
@@ -11,7 +12,8 @@ export default class SignUpForm extends React.Component {
       username: '', 
       password: '',
       password2: '',
-      open: false 
+      open: false,
+      signedIn: false
     };
   } 
 
@@ -39,24 +41,16 @@ export default class SignUpForm extends React.Component {
     if(!(this.state.username && this.state.password)) {
       this.handleOpen();
     } else {
-      console.log('about to send post');
-      let ajaxObj = {
-        type: 'POST',
-        url: url, 
-        data: JSON.stringify(credObj),
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: (data) => {
-          console.log(data);
-          // this.setState({
-          //   cookie: data
-          // });
-        },
-        error: (err) => {
-          console.log('err', err);
-        }
-      }
-      $.ajax(ajaxObj);
+      axios.post(url, credObj)
+        .then((response) => {
+          if (response.status === 200) {
+            console.log(response);
+            this.setState({ signedIn: true });
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     }
   }
 
@@ -72,6 +66,7 @@ export default class SignUpForm extends React.Component {
 
     return (
       <div>
+        {this.state.signedIn === true ? <Redirect to="/" /> : ''}
         <Dialog
           title="Blank Username or Password"
           actions={actions}
