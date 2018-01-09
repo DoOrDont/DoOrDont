@@ -85,9 +85,12 @@ app.post('/login', function(req, res) {
 });
 
 app.post('/signup', function(req, res) {
-  console.log(req.body);
   db.insertUserIntoDB(req.body, function(results) {
-    res.sendStatus(200);
+    if(!results) {
+      res.sendStatus(409);
+    } else {
+      res.sendStatus(200);
+    }
   });
 });
 
