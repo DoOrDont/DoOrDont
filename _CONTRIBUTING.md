@@ -24,7 +24,7 @@ After changes and before submitting pull request
 7. if conflicts were fixed, `git add` changed files
 8. if conflicts were fixed, `git rebase --continue` 
 9. --continue working if necessary--
-10. if conflicts were fixed, `git commit`
+10. `git commit`
 11. `git push origin master`
 12. from github fork, create pull request
 
