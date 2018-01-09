@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { RaisedButton, TextField } from 'material-ui';
+const axios = require('axios');
 
 class Review extends React.Component {
   constructor(props) {
@@ -8,7 +9,6 @@ class Review extends React.Component {
 
     this.state = {
       goal: {},
-      success: false
     };
 
     this.handleReviewSubmit = this.handleReviewSubmit.bind(this);
@@ -21,27 +21,26 @@ class Review extends React.Component {
 
 
   handleReviewSubmit(e) {
-    $.ajax({
-      type: 'POST',
-      url: url,
-      data: {goal: this.state.goal},
-      success: success,
-    });
-  }
-
-  handleSuccess() {
-    this.setState({success: true});
+    axios.post('/goals', this.state.goal)
+      .then(function(response) {
+        if (response.status === 200) {
+          console.log(response);
+        }
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
   }
 
   render() {
     return (
       <div>
-        <div id="goalFreq">
+        <div id="goal-freq">
           <h2>I want to {this.state.goal.description} 
               at least {this.state.goal.frequency} times a week.
           </h2>
         </div>
-        <div id="goalPunishment">
+        <div id="goal-punishment">
           <h3>If I don't accomplish this, Do Or Don't will 
             {if (this.state.goal.punishment === 'email') {
               return (`<h3>
@@ -55,13 +54,16 @@ class Review extends React.Component {
           </h3>
         </div>
         <div id="submission">
-          <a href='/'>Cancel</a>
-          <RaisedButton onClick={this.handleReviewSubmit}>Submit</RaisedButton>
+          <Link to="/">Cancel</Link>
+          <Link to="/">
+            <RaisedButton onClick={this.handleReviewSubmit}>
+              Submit
+            </RaisedButton>
+          </Link>
+        </div>
       </div>
-    
-
     )
-  }
+  }  
 }
 
 export default Review;
