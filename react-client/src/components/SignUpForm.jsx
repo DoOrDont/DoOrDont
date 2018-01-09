@@ -13,7 +13,9 @@ export default class SignUpForm extends React.Component {
       password: '',
       password2: '',
       open: false,
-      signedIn: false
+      signedIn: false,
+      errorTitle: '',
+      errorBody: ''
     };
   } 
 
@@ -31,15 +33,24 @@ export default class SignUpForm extends React.Component {
 
   handleOpen() {
     this.setState({ open: true });
-  };
+  }
 
   handleClose() {
     this.setState({ open: false });
-  };
+  }
+
+  showError(errorTitle, errorBody) {
+    this.setState({
+      errorTitle: errorTitle,
+      errorBody: errorBody
+    }, () => {
+      this.handleOpen();
+    });
+  }
   
   submitCreds(credObj, url) {
     if(!(this.state.username && this.state.password)) {
-      this.handleOpen();
+      this.showError('Blank Username or Password', 'Both Username and Password cannot be blank.');
     } else {
       axios.post(url, credObj)
         .then((response) => {
@@ -48,8 +59,9 @@ export default class SignUpForm extends React.Component {
             this.setState({ signedIn: true });
           }
         })
-        .catch(function (error) {
+        .catch((error) => {
           console.log(error);
+          this.showError('Username unavailable', 'Given username is already in use.');
         });
     }
   }
@@ -68,12 +80,12 @@ export default class SignUpForm extends React.Component {
       <div>
         {this.state.signedIn === true ? <Redirect to="/" /> : ''}
         <Dialog
-          title="Blank Username or Password"
+          title={this.state.errorTitle}
           actions={actions}
           modal={true}
           open={this.state.open}
         >
-          Both Username and Password cannot be blank.
+          {this.errorBody}
         </Dialog>
 
         <h2>Sign Up</h2>
