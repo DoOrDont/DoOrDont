@@ -63,8 +63,9 @@ class List extends React.Component {
   }
 
   componentDidMount() {
+    let tokenObj = jwtDecode(window.sessionStorage.getItem('accessToken'));
     $.ajax({
-      url: '/goals',
+      url: '/goals/' + tokenObj.username,
       success: (data) => {
         this.setState({
           goals: data

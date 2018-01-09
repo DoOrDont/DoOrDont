@@ -38,6 +38,10 @@ export default class LogInForm extends React.Component {
     }
   }
 
+  componentDidMount() {
+    window.sessionStorage.removeItem('accessToken');
+  }
+
   setUsername(e) {
     this.setState({username: e.target.value});
   }

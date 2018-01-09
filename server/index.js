@@ -47,9 +47,9 @@ app.get('/', function (req, res) {
   res.json();
 });
 
-app.get('/goals', function(req, res) {
+app.get('/goals/:username', function(req, res) {
   // Will fetch goals for the specific user
-  db.getGoalsForUser(req.body.username, (results) => {
+  db.getGoalsForUser(req.params.username, (results) => {
     res.json(results);
   });
 });
