@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { RaisedButton, TextField } from 'material-ui';
+import { RaisedButton } from 'material-ui';
 const axios = require('axios');
 
 class Review extends React.Component {
@@ -36,8 +36,13 @@ class Review extends React.Component {
     return (
       <div>
         <div id="goal-freq">
-          <h2>I want to {this.state.goal.description} 
-              at least {this.state.goal.frequency} times a week.
+          <h2>I want to 
+            {if (this.state.goal.initiate === true) {
+              return (`<h2>start</h2>`);
+            } else if (this.state.goal.initiate === false) {
+              return (`<h2>quit</h2>`);
+            }} 
+            {this.state.goal.description} at least {this.state.goal.frequency} times a week.
           </h2>
         </div>
         <div id="goal-punishment">
