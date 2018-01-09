@@ -4,6 +4,7 @@ var session = require('express-session');
 var cookie = require('cookie-parser');
 var path = require('path');
 var jwt = require('jsonwebtoken');
+var jobs = require('./cronJob.js');
 
 var database = require('../database-mysql');
 var db = require('../database-mysql/helpers/models.js');
