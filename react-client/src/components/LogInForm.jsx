@@ -1,9 +1,9 @@
 import React from 'react';
-import { RaisedButton, TextField } from 'material-ui';
+import { RaisedButton, FlatButton, Dialog, TextField } from 'material-ui';
 import { Redirect } from 'react-router';
 
 import { Link } from 'react-router-dom';
-import helpers from '../helpers.jsx';
+// import helpers from '../helpers.jsx';
 
 export default class LogInForm extends React.Component {
 
@@ -11,9 +11,31 @@ export default class LogInForm extends React.Component {
     super(props);
     this.state = {
       username: '', 
-      password: ''
+      password: '',
+      open: false
     };
-  } 
+  }
+
+  submitCreds() {
+    const credObj = {username: this.state.username, password: this.state.password};
+    const url = '/login';
+    console.log('about to send post');
+  
+    if (!(this.state.username && this.state.password)) {
+      this.handleOpen();
+    } else {
+      axios.post(url, credObj)
+        .then(function (response) {
+          if (response.status === 200) {
+            console.log(response);
+
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
+  }
 
   setUsername(e) {
     this.setState({username: e.target.value});
@@ -22,10 +44,36 @@ export default class LogInForm extends React.Component {
   setPassword(e) {
     this.setState({password: e.target.value});
   }
+
+  handleOpen() {
+    this.setState({ open: true });
+  };
+
+  handleClose() {
+    this.setState({ open: false });
+  };
   
   render(){
+
+    const actions = [
+      <FlatButton
+        label="OK"
+        primary={true}
+        onClick={this.handleClose.bind(this)}
+      />,
+    ];
+
     return (
       <div>
+        <Dialog
+          title="Blank Username or Password"
+          actions={actions}
+          modal={true}
+          open={this.state.open}
+        >
+          Both Username and Password cannot be blank.
+        </Dialog>
+        
         <h2>Login</h2>
           <div>
             <TextField
@@ -48,15 +96,7 @@ export default class LogInForm extends React.Component {
           </div>
           <div>
             <RaisedButton
-              onClick={  () => (
-                helpers.submitCreds(
-                  {
-                    username: this.state.username,
-                    password: this.state.password
-                  },
-                  '/login'
-                )
-              )} 
+              onClick={this.submitCreds.bind(this)} 
               value="Login"
             > Login
             </RaisedButton>

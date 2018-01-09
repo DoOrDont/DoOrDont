@@ -114,8 +114,6 @@ app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname + '/../react-client/dist/index.html'));
 });
 
-const PORT = process.env.PORT || 3000;
-
 app.listen(PORT, function() {
   console.log('listening on port PORT!');
 });

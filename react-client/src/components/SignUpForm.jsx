@@ -1,5 +1,5 @@
 import React from 'react';
-import { RaisedButton, TextField } from 'material-ui';
+import { RaisedButton, FlatButton, TextField, Dialog } from 'material-ui';
 import $ from 'jquery';
 import { Link } from 'react-router-dom';
 
@@ -10,7 +10,8 @@ export default class SignUpForm extends React.Component {
     this.state = {
       username: '', 
       password: '',
-      password2: ''  
+      password2: '',
+      open: false 
     };
   } 
 
@@ -25,31 +26,61 @@ export default class SignUpForm extends React.Component {
    setPassword2(e) {
     this.setState({password2: e.target.value});
   }
+
+  handleOpen() {
+    this.setState({ open: true });
+  };
+
+  handleClose() {
+    this.setState({ open: false });
+  };
   
   submitCreds(credObj, url) {
-    console.log('about to send post');
-    let ajaxObj = {
-      type: 'POST',
-      url: url, 
-      data: JSON.stringify(credObj),
-      contentType: "application/json; charset=utf-8",
-      dataType: "json",
-      success: (data) => {
-        console.log(data);
-        // this.setState({
-        //   cookie: data
-        // });
-      },
-      error: (err) => {
-        console.log('err', err);
+    if(!(this.state.username && this.state.password)) {
+      this.handleOpen();
+    } else {
+      console.log('about to send post');
+      let ajaxObj = {
+        type: 'POST',
+        url: url, 
+        data: JSON.stringify(credObj),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: (data) => {
+          console.log(data);
+          // this.setState({
+          //   cookie: data
+          // });
+        },
+        error: (err) => {
+          console.log('err', err);
+        }
       }
-    };
-    $.ajax(ajaxObj);  
+      $.ajax(ajaxObj);
+    }
   }
 
   render(){
+
+    const actions = [
+      <FlatButton
+        label="OK"
+        primary={true}
+        onClick={this.handleClose.bind(this)}
+      />,
+    ];
+
     return (
       <div>
+        <Dialog
+          title="Blank Username or Password"
+          actions={actions}
+          modal={true}
+          open={this.state.open}
+        >
+          Both Username and Password cannot be blank.
+        </Dialog>
+
         <h2>Sign Up</h2>
           <div>
             <TextField
