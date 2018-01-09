@@ -43,14 +43,16 @@ const Punishments = (props) => (
       style={styles.gridList}
     >
       {punishments.map((pun) => (
-        <GridTile key={pun.icon} onClick={() => {
-            let goal = JSON.parse(window.localStorage.getItem('goalObj'));
+        <GridTile key={pun.icon}>
+          <Card style={cardStyles} onClick={() => {
+            let goal = JSON.parse(window.sessionStorage.getItem('goalObj'));
+            if (!goal) {
+              goal = {};
+            }
             goal.punishment = pun.title;
             console.log('GOAL:', goal);
-            console.log('Again');
-            window.localStorage.setItem('goalObj', JSON.stringify(goal));
+            window.sessionStorage.setItem('goalObj', JSON.stringify(goal));
           }}>
-          <Card style={cardStyles} >
             <CardHeader
               title={pun.title}
             />

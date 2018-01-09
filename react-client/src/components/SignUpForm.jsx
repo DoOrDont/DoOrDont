@@ -1,7 +1,8 @@
 import React from 'react';
 import { RaisedButton, FlatButton, TextField, Dialog } from 'material-ui';
 import $ from 'jquery';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
+const axios = require('axios');
 
 export default class SignUpForm extends React.Component {
 
@@ -11,7 +12,10 @@ export default class SignUpForm extends React.Component {
       username: '', 
       password: '',
       password2: '',
-      open: false 
+      open: false,
+      signedIn: false,
+      errorTitle: '',
+      errorBody: ''
     };
   } 
 
@@ -29,34 +33,36 @@ export default class SignUpForm extends React.Component {
 
   handleOpen() {
     this.setState({ open: true });
-  };
+  }
 
   handleClose() {
     this.setState({ open: false });
-  };
+  }
+
+  showError(errorTitle, errorBody) {
+    this.setState({
+      errorTitle: errorTitle,
+      errorBody: errorBody
+    }, () => {
+      this.handleOpen();
+    });
+  }
   
   submitCreds(credObj, url) {
     if(!(this.state.username && this.state.password)) {
-      this.handleOpen();
+      this.showError('Blank Username or Password', 'Both Username and Password cannot be blank.');
     } else {
-      console.log('about to send post');
-      let ajaxObj = {
-        type: 'POST',
-        url: url, 
-        data: JSON.stringify(credObj),
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: (data) => {
-          console.log(data);
-          // this.setState({
-          //   cookie: data
-          // });
-        },
-        error: (err) => {
-          console.log('err', err);
-        }
-      }
-      $.ajax(ajaxObj);
+      axios.post(url, credObj)
+        .then((response) => {
+          if (response.status === 200) {
+            console.log(response);
+            this.setState({ signedIn: true });
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+          this.showError('Username unavailable', 'Given username is already in use.');
+        });
     }
   }
 
@@ -72,13 +78,14 @@ export default class SignUpForm extends React.Component {
 
     return (
       <div>
+        {this.state.signedIn === true ? <Redirect to="/" /> : ''}
         <Dialog
-          title="Blank Username or Password"
+          title={this.state.errorTitle}
           actions={actions}
           modal={true}
           open={this.state.open}
         >
-          Both Username and Password cannot be blank.
+          {this.errorBody}
         </Dialog>
 
         <h2>Sign Up</h2>

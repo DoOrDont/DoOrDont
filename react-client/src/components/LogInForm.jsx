@@ -13,11 +13,13 @@ export default class LogInForm extends React.Component {
     this.state = {
       username: '', 
       password: '',
-      open: false
+      open: false,
+      signedIn: false
     };
   }
 
   submitCreds() {
+    const that = this;
     const credObj = {username: this.state.username, password: this.state.password};
     const url = '/login';
     console.log('about to send post');
@@ -26,14 +28,15 @@ export default class LogInForm extends React.Component {
       this.handleOpen();
     } else {
       axios.post(url, credObj)
-        .then(function (response) {
+        .then((response) => {
           if (response.status === 200) {
-            console.log(response);
-
+            window.sessionStorage.accessToken = response.data.token;
+            this.setState({signedIn: true});
           }
         })
         .catch(function (error) {
           console.log(error);
+          alert('Incorrect username or password');
         });
     }
   }
@@ -67,9 +70,11 @@ export default class LogInForm extends React.Component {
         onClick={this.handleClose.bind(this)}
       />,
     ];
-
     return (
       <div>
+
+        {this.state.signedIn === true ? <Redirect to="/" /> : ''}
+
         <Dialog
           title="Blank Username or Password"
           actions={actions}

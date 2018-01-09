@@ -171,6 +171,7 @@ module.exports.insertUserIntoDB = (userObj, callback) => {
       connection.query('INSERT INTO users (username, password, salt) VALUES (?, ?, ?)', [username, hash, salt], (err, results) => {
         if(err) {
           console.log(err);
+          callback(false);
         } else {
           callback(results);
         }
@@ -200,6 +201,7 @@ module.exports.getAndVerifyUser = (userObj, callback) => {
   const {username, password} = userObj;
   connection.query('SELECT * FROM users WHERE username=?', [username], (err, results) => {
     if(err) throw err;
+    if(!results.length) return callback(false);
     
     bcrypt.hash(password, results[0].salt, null, (err, hash) => {
       if(err) throw err;
