@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { RaisedButton, TextField } from 'material-ui';
+const axios = require('axios');
 
 class Review extends React.Component {
   constructor(props) {
@@ -21,11 +22,11 @@ class Review extends React.Component {
 
 
   handleReviewSubmit(e) {
-    axios.post('/goals', {goal: this.state.goal})
+    console.log('GOAL:', this.state.goal);
+    axios.post('/goals', this.state.goal)
       .then((response) => {
         if (response.status === 200) {
-          // response.body.goalId
-          window.sessionStorage.newestGoalId = response.body.goalId.toString();
+          window.sessionStorage.newestGoalId = response.data.goalId.toString();
           this.handleSuccess();
         }
       })

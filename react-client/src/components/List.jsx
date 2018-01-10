@@ -63,10 +63,15 @@ class List extends React.Component {
   }
 
   componentDidMount() {
+    const goalId = window.sessionStorage.getItem('newestGoalId');
     let tokenObj = jwtDecode(window.sessionStorage.getItem('accessToken'));
     $.ajax({
       url: '/goals/' + tokenObj.username,
       success: (data) => {
+        if(goalId && data.length) {
+          data[data.length - 1].goalId = Number(goalId);
+          window.sessionStorage.removeItem('newestGoalId');
+        }
         this.setState({
           goals: data
         });
@@ -91,7 +96,7 @@ class List extends React.Component {
             <ListItem 
               goal={goal} 
               key={index} 
-              index={index} 
+              index={goal.goalId || index} 
               incrementGoal={this.incrementGoal.bind(this)} 
               editGoal={this.editGoal.bind(this)} 
               deleteGoal={this.deleteGoal.bind(this)}
