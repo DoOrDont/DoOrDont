@@ -1,16 +1,20 @@
 const mysql = require('mysql');
 
-const CLEARDB_DATABASE_URL = process.env.CLEARDB_DATABASE_URL || 'localhost';
-const DB_PASS = process.env.DB_PASS || '';
-const DB_USER = process.env.DB_USER || 'root';
-const DB_NAME = process.env.DB_NAME || 'doordontdb';
+const CLEARDB_DATABASE_URL = process.env.CLEARDB_DATABASE_URL;
 
+const HEROKU_CONNECTION_CONFIG = CLEARDB_DATABASE_URL;
 
-const connection = mysql.createConnection({
-  host: CLEARDB_DATABASE_URL,
-  user: DB_USER,
-  password: DB_PASS,
-  database: DB_NAME
-});
+const LOCAL_CONNECTION_CONFIG = {
+  host: 'localhost',
+  user: 'root',
+  password: '',
+  database: 'doordontdb'
+};
+
+const ENV_CONFIG = process.env.NODE_ENV === 'production' ? HEROKU_CONNECTION_CONFIG : LOCAL_CONNECTION_CONFIG;
+
+const connection = mysql.createConnection(ENV_CONFIG);
+
+console.log('ENV_CONFIG', ENV_CONFIG);
 
 module.exports.connection = connection;
