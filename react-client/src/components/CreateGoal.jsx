@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { RaisedButton, TextField } from 'material-ui';
 const jwtDecode = require('jwt-decode');
 
@@ -42,6 +42,10 @@ class CreateGoal extends React.Component {
     let token = window.sessionStorage.getItem('accessToken');
     let tokenObj = jwtDecode(token);
     goalObj.username = tokenObj.username;
+    goalObj.description = this.state.description;
+    goalObj.initiate = this.state.initiate;
+    goalObj.frequency = this.state.frequency;
+    window.sessionStorage.setItem('goalObj', JSON.stringify(goalObj));
     this.setState({ submitted: true })
     e.preventDefault();
 
@@ -64,7 +68,7 @@ class CreateGoal extends React.Component {
           <input type="number" value={this.state.frequency} 
           onChange={(e) => this.handleInputChange('frequency', e)}/> times a week. <br/>
 
-          <input type="submit" value="Next" />
+          <RaisedButton label="Next" onClick={this.handleSubmit}/>
 
           {/* My punishment will be:
           <input type="text" value={this.state.punishment} 

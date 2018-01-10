@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { RaisedButton, TextField } from 'material-ui';
 
 class Review extends React.Component {
@@ -25,6 +25,8 @@ class Review extends React.Component {
       .then((response) => {
         if (response.status === 200) {
           // response.body.goalId
+          window.sessionStorage.newestGoalId = response.body.goalId.toString();
+          this.handleSuccess();
         }
       })
       .catch(function (error) {
@@ -40,6 +42,7 @@ class Review extends React.Component {
   render() {
     return (
       <div>
+        {this.state.success === true ? <Redirect to="/" /> : ''}
         <div id="goalFreq">
           <h2>I want to {this.state.goal.description} 
               at least {this.state.goal.frequency} times a week.
