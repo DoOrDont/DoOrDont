@@ -1,5 +1,6 @@
 import React from 'react';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText, GridList, GridTile} from 'material-ui';
+import {Redirect} from 'react-router-dom';
 
 const styles = {
   root: {
@@ -36,37 +37,51 @@ const punishments = [
   }
 ];
 
-const Punishments = (props) => (
-  <div>
-    <GridList 
-      cellHeight={700}
-      style={styles.gridList}
-    >
-      {punishments.map((pun) => (
-        <GridTile key={pun.icon}>
-          <Card style={cardStyles} onClick={() => {
-            let goal = JSON.parse(window.sessionStorage.getItem('goalObj'));
-            if (!goal) {
-              goal = {};
-            }
-            goal.punishment = pun.title;
-            console.log('GOAL:', goal);
-            window.sessionStorage.setItem('goalObj', JSON.stringify(goal));
-          }}>
-            <CardHeader
-              title={pun.title}
-            />
-            <CardMedia>
-              <img src={pun.icon} alt={pun.title}/>
-            </CardMedia>
-            <CardText>
-              {pun.description}
-            </CardText>
-          </Card>
-        </GridTile>
-      ))}
-    </GridList>
-  </div>
-);
+class Punishments extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      redirect: false
+    };
+  }
+
+  render() {
+    return (
+      <div>
+        {this.state.redirect === true ? <Redirect to="/review" /> : ''}
+        <GridList 
+          cellHeight={700}
+          style={styles.gridList}
+        >
+          {punishments.map((pun) => (
+            <GridTile key={pun.icon}>
+              <Card style={cardStyles} onClick={() => {
+                let goal = JSON.parse(window.sessionStorage.getItem('goalObj'));
+                if (!goal) {
+                  goal = {};
+                }
+                goal.punishment = pun.title;
+                console.log('GOAL:', goal);
+                window.sessionStorage.setItem('goalObj', JSON.stringify(goal));
+                this.setState({redirect: true});
+              }}>
+                <CardHeader
+                  title={pun.title}
+                />
+                <CardMedia>
+                  <img src={pun.icon} alt={pun.title}/>
+                </CardMedia>
+                <CardText>
+                  {pun.description}
+                </CardText>
+              </Card>
+            </GridTile>
+          ))}
+        </GridList>
+      </div>
+    );
+  } 
+} 
 
 export default Punishments;
