@@ -1,12 +1,14 @@
 const mysql = require('mysql');
 
-const DB_PATH = process.env.DB_PATH || 'localhost';
-const PASS = process.env.PASS || '';
+const CLEARDB_DATABASE_URL = process.env.CLEARDB_DATABASE_URL || 'localhost';
+const DB_PASS = process.env.DB_PASS || '';
+const DB_USER = process.env.DB_USER || 'root';
+
 
 const connection = mysql.createConnection({
-  host: DB_PATH,
-  user: 'root',
-  password: PASS,
+  host: CLEARDB_DATABASE_URL,
+  user: DB_USER,
+  password: DB_PASS,
   database: 'doordontdb'
 });
 
