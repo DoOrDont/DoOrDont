@@ -9,7 +9,6 @@ class Review extends React.Component {
 
     this.state = {
       goal: {},
-      success: false
     };
 
     this.handleReviewSubmit = this.handleReviewSubmit.bind(this);
