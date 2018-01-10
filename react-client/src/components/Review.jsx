@@ -9,7 +9,6 @@ class Review extends React.Component {
 
     this.state = {
       goal: {},
-      success: false
     };
 
     this.handleReviewSubmit = this.handleReviewSubmit.bind(this);
@@ -22,7 +21,6 @@ class Review extends React.Component {
 
 
   handleReviewSubmit(e) {
-    console.log('GOAL:', this.state.goal);
     axios.post('/goals', this.state.goal)
       .then((response) => {
         if (response.status === 200) {
@@ -44,8 +42,8 @@ class Review extends React.Component {
     return (
       <div>
         {this.state.success === true ? <Redirect to="/" /> : ''}
-        <div id="goalFreq">
-          <h2>I want to {this.state.goal.description} 
+        <div id="goal-freq">
+          <h2>I want to {this.state.goal.initiate ? <h2>start</h2> : <h2>quit</h2>} {this.state.goal.description} 
               at least {this.state.goal.frequency} times a week.
           </h2>
         </div>
@@ -61,7 +59,7 @@ class Review extends React.Component {
         </div>
       </div>
     )
-  }
+  }  
 }
 
 export default Review;
