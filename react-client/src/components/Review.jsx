@@ -24,9 +24,19 @@ class Review extends React.Component {
     axios.post('/goals', this.state.goal)
       .then((response) => {
         if (response.status === 200) {
-          window.sessionStorage.newestGoalId = response.data.goalId.toString();
+          const goalId = response.data.goalId;
+          window.sessionStorage.newestGoalId = goalId.toString();
+          const email = JSON.parse(window.sessionStorage.getItem('goalObj')).username;
           this.handleSuccess();
+          
+          return {email, goalId};
         }
+      })
+      .then((goalInfo) => {
+        return axios.post('/jobs', goalInfo);
+      })
+      .then((response) => {
+        console.log('Job Started!');
       })
       .catch(function (error) {
         console.log(error);
