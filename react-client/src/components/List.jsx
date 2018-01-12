@@ -2,7 +2,7 @@ import React from 'react';
 import ListItem from './ListItem.jsx';
 import $ from 'jquery';
 import dumbyData from './testData.js';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { RaisedButton, TextField } from 'material-ui';
 const axios = require('axios');
 const jwtDecode = require('jwt-decode');
@@ -15,7 +15,8 @@ class List extends React.Component {
     super(props);
     this.state = { 
       goals: dumbyData.dumbyGoals,
-      token: null
+      token: null,
+      signedIn: true
     };
   }
 
@@ -63,28 +64,34 @@ class List extends React.Component {
   }
 
   componentDidMount() {
-    const goalId = window.localStorage.getItem('newestGoalId');
-    let tokenObj = jwtDecode(window.sessionStorage.getItem('accessToken'));
-    $.ajax({
-      url: '/goals/' + tokenObj.username,
-      success: (data) => {
-        if(goalId && data.length) {
-          data[data.length - 1].goalId = Number(goalId);
-          window.sessionStorage.removeItem('newestGoalId');
+    if(window.localStorage.getItem('accessToken') !== null) {
+      const goalId = window.localStorage.getItem('newestGoalId');
+      let tokenObj = jwtDecode(window.localStorage.getItem('accessToken'));
+      $.ajax({
+        url: '/goals/' + tokenObj.username,
+        success: (data) => {
+          if(goalId && data.length) {
+            data[data.length - 1].goalId = Number(goalId);
+            window.localStorage.removeItem('newestGoalId');
+          }
+          this.setState({
+            goals: data,
+            signedIn: true
+          });
+        },
+        error: (err) => {
+          console.log('err', err);
         }
-        this.setState({
-          goals: data
-        });
-      },
-      error: (err) => {
-        console.log('err', err);
-      }
-    });
+      });
+    } else {
+      this.setState({signedIn: false});
+    }
   }
   
   render () {
     return (
       <div>
+        {this.state.signedIn === false ? <Redirect to="/login" /> : ''}
         <Link to="/login">
           <RaisedButton>
             Sign Out

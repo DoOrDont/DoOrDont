@@ -57,6 +57,7 @@ class Punishments extends React.Component {
           {punishments.map((pun) => (
             <GridTile key={pun.icon}>
               <Card style={cardStyles} onClick={() => {
+                console.log('Window goalObj:', window.localStorage.getItem('goalObj'));
                 let goal = JSON.parse(window.localStorage.getItem('goalObj'));
                 if (!goal) {
                   goal = {};

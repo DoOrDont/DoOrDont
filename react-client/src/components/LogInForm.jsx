@@ -31,6 +31,7 @@ export default class LogInForm extends React.Component {
         .then((response) => {
           if (response.status === 200) {
             window.localStorage.accessToken = response.data.token;
+            console.log('New token:', window.localStorage.accessToken);
             this.setState({signedIn: true});
           }
         })
