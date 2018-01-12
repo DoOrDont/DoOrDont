@@ -49,6 +49,10 @@ module.exports.scheduleEmail = (email, goalId) => {
           } else {
             console.log('Email sent: ' + info.response);
           }
+
+          db.resetCounter(goalId, (results) => {
+            console.log('Goal counter reset');
+          });
         });
       }
     });

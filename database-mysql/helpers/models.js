@@ -148,6 +148,26 @@ module.exports.deleteGoal = (goalId, callback) => {
 
 /************************************************
  Function:
+   Resets given goal's counter
+
+ Inputs:
+   goalId Number representing the id of desired goal
+
+ Output:
+   None.
+   The callback will be given an Object metadata
+   about the deletion.
+************************************************/
+module.exports.resetCounter = (goalId, callback) => {
+  connection.query('UPDATE goals SET counter=0 WHERE id=?', [goalId], (err, results) => {
+    if(err) throw err;
+    
+    callback(results);
+  });
+};
+
+/************************************************
+ Function:
    Inserts user info into database
 
  Inputs:
