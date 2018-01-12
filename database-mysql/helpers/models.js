@@ -60,7 +60,7 @@ module.exports.getGoalsForUser = (username, callback) => {
 ************************************************/
 module.exports.insertGoalsIntoDB = (goalsObj, callback) => {
   const {description, punishment, initiate, frequency, username} = goalsObj;
-  let initiating = initiate ? 1 : 0;
+  let initiating = initiate === 'true' ? 1 : 0;
 
   console.log('Inserting goal:', goalsObj);
 
@@ -143,6 +143,26 @@ module.exports.deleteGoal = (goalId, callback) => {
     if(err) throw err;
 
     callback(result);
+  });
+};
+
+/************************************************
+ Function:
+   Resets given goal's counter
+
+ Inputs:
+   goalId Number representing the id of desired goal
+
+ Output:
+   None.
+   The callback will be given an Object metadata
+   about the deletion.
+************************************************/
+module.exports.resetCounter = (goalId, callback) => {
+  connection.query('UPDATE goals SET counter=0 WHERE id=?', [goalId], (err, results) => {
+    if(err) throw err;
+    
+    callback(results);
   });
 };
 
