@@ -26,7 +26,7 @@ class Review extends React.Component {
         if (response.status === 200) {
           const goalId = response.data.goalId;
           window.localStorage.newestGoalId = goalId.toString();
-          const email = JSON.parse(window.sessionStorage.getItem('goalObj')).username;
+          const email = JSON.parse(window.localStorage.getItem('goalObj')).username;
           this.handleSuccess();
           
           return {email, goalId};

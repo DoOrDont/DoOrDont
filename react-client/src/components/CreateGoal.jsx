@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import { RaisedButton, TextField, DropDownMenu } from 'material-ui';
+import { RaisedButton, TextField, DropDownMenu, Dialog, FlatButton } from 'material-ui';
 const jwtDecode = require('jwt-decode');
 
 class CreateGoal extends React.Component {
@@ -12,7 +12,10 @@ class CreateGoal extends React.Component {
       punishment: '',
       initiate: 'true',
       frequency: '',
-      submitted: false
+      submitted: false,
+      open: false,
+      errorTitle: '',
+      errorBody: ''
     };
 
     this.changeRoute = {
@@ -37,24 +40,61 @@ class CreateGoal extends React.Component {
 
   handleSubmit(e) {
     console.log('Form submitted');
-    //TODO: move user to punishment
-    let goalObj = JSON.parse(window.localStorage.getItem('goalObj'));
-    let token = window.sessionStorage.getItem('accessToken');
-    let tokenObj = jwtDecode(token);
-    goalObj.username = tokenObj.username;
-    goalObj.description = this.state.description;
-    goalObj.initiate = this.state.initiate;
-    goalObj.frequency = this.state.frequency;
-    window.sessionStorage.setItem('goalObj', JSON.stringify(goalObj));
-    this.setState({ submitted: true })
+    console.log('STATE:', this.state);
+    if(this.state.description.length && this.state.frequency.length) {
+      let goalObj = JSON.parse(window.localStorage.getItem('goalObj'));
+      let token = window.localStorage.getItem('accessToken');
+      let tokenObj = jwtDecode(token);
+      goalObj.username = tokenObj.username;
+      goalObj.description = this.state.description;
+      goalObj.initiate = this.state.initiate;
+      goalObj.frequency = this.state.frequency;
+      window.localStorage.setItem('goalObj', JSON.stringify(goalObj));
+      this.setState({ submitted: true })
+    } else {
+      this.showError('Empty Fields', 'Goal description and frequency cannot be empty');
+    }
     e.preventDefault();
+  }
 
+  handleOpen() {
+    this.setState({ open: true });
+  }
+
+  handleClose() {
+    this.setState({ open: false });
+  }
+
+  showError(errorTitle, errorBody) {
+    this.setState({
+      errorTitle: errorTitle,
+      errorBody: errorBody
+    }, () => {
+      this.handleOpen();
+    });
   }
 
   render() {
+
+    const actions = [
+      <FlatButton
+        label="OK"
+        primary={true}
+        onClick={this.handleClose.bind(this)}
+      />,
+    ];
+
     return (
-      
       <div>
+        <Dialog
+          title={this.state.errorTitle}
+          actions={actions}
+          modal={true}
+          open={this.state.open}
+        >
+          {this.state.errorBody}
+        </Dialog>
+
         {this.state.submitted === true ? <Redirect to="/punishment" /> : ''}
         <form onSubmit={this.handleSubmit}>
           <h1>I want to
