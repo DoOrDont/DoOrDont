@@ -28,7 +28,7 @@ module.exports.scheduleEmail = (email, goalId) => {
   const job = schedule.scheduleJob(rule, () => {
     db.checkGoalCompletion(goalId, (results) => {
 
-      if(!results.metGoal) {
+      if(results && !results.metGoal) {
         let message;
         if(results.initiate) {
           message = `You promised to "${results.description}" at least ${results.frequency} times, but you only did it ${results.counter} times!`;
@@ -54,6 +54,43 @@ module.exports.scheduleEmail = (email, goalId) => {
             console.log('Goal counter reset');
           });
         });
+      }
+    });
+  });
+};
+
+module.exports.scheduleReminder = (email) => {
+  const rule = new schedule.RecurrenceRule();
+
+  // if(process.env.NODE_ENV === 'production') {
+  if (process.env.NODE_ENV === 'production') {
+    //for production:
+    rule.dayOfWeek = [3, 6];
+    rule.hour = 18;
+    rule.minute = 0;
+  } else {
+    //for testing:
+    rule.dayOfWeek = [0, 1, 2, 3, 4, 5, 6];
+  }
+
+
+  const job = schedule.scheduleJob(rule, () => {
+
+    let message = 'Remember to go to doordont.herokuapp.com/goals to check on your goals for this week!';
+
+
+    const mailOptions = {
+      from: 'doordont.team@gmail.com',
+      to: email,
+      subject: 'Goal reminder',
+      text: message
+    };
+
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log('Email sent: ' + info.response);
       }
     });
   });

@@ -115,13 +115,15 @@ module.exports.incrementGoalCounter = (goalId, callback) => {
 module.exports.checkGoalCompletion = (goalId, callback) => {
   connection.query('SELECT initiate, frequency, counter, description FROM goals WHERE id=?', [goalId], (err, results) => {
     if(err) throw err;
-
-    const {initiate, frequency, counter, description} = results[0];
-    let initiating = initiate ? true : false;
-    if(counter >= frequency) {
-      callback({metGoal: initiating, frequency, counter, description, initiate: initiating});
-    } else {
-      callback({metGoal: !initiating, frequency, counter, description, initiate: initiating});
+    if(!results.length) callback(null);
+    else {
+      const {initiate, frequency, counter, description} = results[0];
+      let initiating = initiate ? true : false;
+      if(counter >= frequency) {
+        callback({metGoal: initiating, frequency, counter, description, initiate: initiating});
+      } else {
+        callback({metGoal: !initiating, frequency, counter, description, initiate: initiating});
+      }
     }
   });
 };

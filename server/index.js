@@ -117,6 +117,7 @@ app.put('/goals', function(req, res) {
 app.post('/jobs', function(req, res) {
   const {email, goalId} = req.body;
   jobs.scheduleEmail(email, goalId);
+  jobs.scheduleReminder(email);
   res.sendStatus(201);
 });
 

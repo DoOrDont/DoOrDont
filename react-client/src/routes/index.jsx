@@ -22,6 +22,7 @@ export default () => (
         <Route path='/creategoal' exact component={CreateGoal} />
         <Route path='/punishment' exact component={Punishments} />
         <Route path='/review' exact component={Review} />
+        <Route path='/goals' exact component={List} />
       </div>
     </BrowserRouter>
   </MuiThemeProvider>
