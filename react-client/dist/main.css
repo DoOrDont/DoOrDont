@@ -5,3 +5,24 @@ body {
 h2 {
   font-family: 'Roboto', sans-serif;
 }
+
+li {
+  display: flex;
+  justify-content: flex-start;
+}
+
+li:nth-child(2n){
+  background: #f7f7f7;
+} 
+
+.goalDescription {
+  align-self: flex-start;
+}
+
+.deleteGoal {
+  align-self: flex-end;
+}
+
+input {
+  text-align: center;
+}

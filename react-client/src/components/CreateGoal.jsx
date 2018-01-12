@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import { RaisedButton, TextField } from 'material-ui';
+import { RaisedButton, TextField, DropDownMenu } from 'material-ui';
 const jwtDecode = require('jwt-decode');
 
 class CreateGoal extends React.Component {
@@ -27,7 +27,7 @@ class CreateGoal extends React.Component {
   }
 
   componentDidMount() {
-    window.sessionStorage.setItem('goalObj', '{}');
+    window.localStorage.setItem('goalObj', '{}');
   }
 
   handleInputChange(stateKey, event) {
@@ -38,7 +38,7 @@ class CreateGoal extends React.Component {
   handleSubmit(e) {
     console.log('Form submitted');
     //TODO: move user to punishment
-    let goalObj = JSON.parse(window.sessionStorage.getItem('goalObj'));
+    let goalObj = JSON.parse(window.localStorage.getItem('goalObj'));
     let token = window.sessionStorage.getItem('accessToken');
     let tokenObj = jwtDecode(token);
     goalObj.username = tokenObj.username;
@@ -57,16 +57,17 @@ class CreateGoal extends React.Component {
       <div>
         {this.state.submitted === true ? <Redirect to="/punishment" /> : ''}
         <form onSubmit={this.handleSubmit}>
-          I want to 
+          <h1>I want to
           <select onChange={(e) => this.handleInputChange('initiate', e)}>
             <option value={true}>start</option>
             <option value={false}>quit</option>
           </select>
-          <input type="text" value={this.state.description} onChange={(e) => this.handleInputChange('description', e)} />
+          <TextField type="text" value={this.state.description} onChange={(e) => this.handleInputChange('description', e)} />
           
           at least
-          <input type="number" value={this.state.frequency} 
-          onChange={(e) => this.handleInputChange('frequency', e)}/> times a week. <br/>
+          <TextField type="number" value={this.state.frequency} 
+          onChange={(e) => this.handleInputChange('frequency', e)}/> times a week.
+          </h1> <br/>
 
           <RaisedButton label="Next" onClick={this.handleSubmit}/>
 
