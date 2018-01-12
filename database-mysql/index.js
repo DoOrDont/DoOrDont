@@ -1,8 +1,8 @@
 const mysql = require('mysql');
 
-const CLEARDB_DATABASE_URL = process.env.CLEARDB_DATABASE_URL;
-
-const HEROKU_CONNECTION_CONFIG = CLEARDB_DATABASE_URL;
+//const CLEARDB_DATABASE_URL = process.env.CLEARDB_DATABASE_URL;
+const JAWSDB_URL = process.env.JAWSDB_URL;
+const HEROKU_CONNECTION_CONFIG = JAWSDB_URL;
 
 const LOCAL_CONNECTION_CONFIG = {
   host: 'localhost',
