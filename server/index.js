@@ -114,6 +114,12 @@ app.put('/goals', function(req, res) {
   }
 });
 
+app.post('/jobs', function(req, res) {
+  const {email, goalId} = req.body;
+  jobs.scheduleEmail(email, goalId);
+  res.sendStatus(201);
+});
+
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname + '/../react-client/dist/index.html'));
 });
