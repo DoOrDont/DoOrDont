@@ -60,7 +60,7 @@ module.exports.getGoalsForUser = (username, callback) => {
 ************************************************/
 module.exports.insertGoalsIntoDB = (goalsObj, callback) => {
   const {description, punishment, initiate, frequency, username} = goalsObj;
-  let initiating = initiate ? 1 : 0;
+  let initiating = initiate === 'true' ? 1 : 0;
 
   console.log('Inserting goal:', goalsObj);
 

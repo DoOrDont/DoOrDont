@@ -85,7 +85,7 @@ export default class SignUpForm extends React.Component {
           modal={true}
           open={this.state.open}
         >
-          {this.errorBody}
+          {this.state.errorBody}
         </Dialog>
 
         <h2>Sign Up</h2>

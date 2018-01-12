@@ -10,7 +10,7 @@ class CreateGoal extends React.Component {
     this.state = {
       description: '',
       punishment: '',
-      initiate: true,
+      initiate: 'true',
       frequency: '',
       submitted: false
     };
