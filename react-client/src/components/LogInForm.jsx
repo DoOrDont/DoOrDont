@@ -30,7 +30,7 @@ export default class LogInForm extends React.Component {
       axios.post(url, credObj)
         .then((response) => {
           if (response.status === 200) {
-            window.sessionStorage.accessToken = response.data.token;
+            window.localStorage.accessToken = response.data.token;
             this.setState({signedIn: true});
           }
         })
@@ -42,7 +42,7 @@ export default class LogInForm extends React.Component {
   }
 
   componentDidMount() {
-    window.sessionStorage.removeItem('accessToken');
+    window.localStorage.removeItem('accessToken');
   }
 
   setUsername(e) {

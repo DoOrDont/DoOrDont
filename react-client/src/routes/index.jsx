@@ -8,12 +8,14 @@ import SignUpForm from '../components/SignUpForm.jsx';
 import CreateGoal from '../components/CreateGoal.jsx';
 import Punishments from '../components/Punishments.jsx';
 import Review from '../components/Review.jsx';
+import AppBarNav from '../components/AppBar.jsx';
 
 
 export default () => (
   <MuiThemeProvider>
     <BrowserRouter>
       <div>
+        <Route component={AppBarNav} />
         <Route path='/' exact component={List} />
         <Route path='/login' exact component={LogInForm} />
         <Route path='/signup' exact component={SignUpForm} />

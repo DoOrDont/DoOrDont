@@ -15,7 +15,7 @@ class Review extends React.Component {
   }
 
   componentDidMount() {
-    let goal = JSON.parse(sessionStorage.getItem('goalObj'));
+    let goal = JSON.parse(localStorage.getItem('goalObj'));
     this.setState({goal});
   }
 
@@ -25,7 +25,7 @@ class Review extends React.Component {
       .then((response) => {
         if (response.status === 200) {
           const goalId = response.data.goalId;
-          window.sessionStorage.newestGoalId = goalId.toString();
+          window.localStorage.newestGoalId = goalId.toString();
           const email = JSON.parse(window.sessionStorage.getItem('goalObj')).username;
           this.handleSuccess();
           

@@ -15,7 +15,7 @@ class List extends React.Component {
     super(props);
     this.state = { 
       goals: dumbyData.dumbyGoals,
-      cookie: null
+      token: null
     };
   }
 
@@ -63,7 +63,7 @@ class List extends React.Component {
   }
 
   componentDidMount() {
-    const goalId = window.sessionStorage.getItem('newestGoalId');
+    const goalId = window.localStorage.getItem('newestGoalId');
     let tokenObj = jwtDecode(window.sessionStorage.getItem('accessToken'));
     $.ajax({
       url: '/goals/' + tokenObj.username,
@@ -90,8 +90,9 @@ class List extends React.Component {
             Sign Out
           </RaisedButton>
         </Link>
-        <h4> List Component </h4>
-          There are { this.state.goals.length } items.
+        <h4> Your goals: </h4>
+          You currently have { this.state.goals.length } goals.
+          <ul>
           { this.state.goals.map((goal, index) => (
             <ListItem 
               goal={goal} 
@@ -102,6 +103,7 @@ class List extends React.Component {
               deleteGoal={this.deleteGoal.bind(this)}
             />
           ))}
+          </ul>
         <br/><br/>
         <Link to="/creategoal">
           <RaisedButton>
