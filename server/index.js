@@ -54,6 +54,13 @@ app.get('/goals/:username', function(req, res) {
   });
 });
 
+app.get('/users/:username', function (req, res) {
+  // Will fetch goals for the specific user
+  db.checkForTwitterHandle(req.params.username, (results) => {
+    res.json({hasHandle: results});
+  });
+});
+
 
 /******* Handle POST requests ********/
 app.post('/login', function(req, res) {
