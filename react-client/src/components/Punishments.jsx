@@ -1,6 +1,7 @@
 import React from 'react';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText, GridList, GridTile} from 'material-ui';
 import {Redirect} from 'react-router-dom';
+const axios = require('axios');
 
 const styles = {
   root: {
@@ -42,13 +43,42 @@ class Punishments extends React.Component {
     super(props);
 
     this.state = {
-      redirect: false
+      redirect: false,
+      open: false,
+      twitter: ''
     };
   }
 
+    handleTwitterSelect() {
+      
+    }
+
+    handleTwitterChange(e) {
+      console.log(this.state.twitter);
+      this.setState({twitter: e.target.value});
+    }
+
   render() {
+
+    const actions = [
+      <FlatButton
+        label="OK"
+        primary={true}
+        onClick={this.handleClose.bind(this)}
+      />,
+    ];
+
     return (
       <div>
+        <Dialog
+          title="Input twitter handle"
+          actions={actions}
+          modal={true}
+          open={this.state.open}
+        >
+          <input type="text" onChange={this.handleTwitterChange.bind(this)} value={this.state.twitter} />
+        </Dialog>
+
         {this.state.redirect === true ? <Redirect to="/review" /> : ''}
         <GridList 
           cellHeight={700}
