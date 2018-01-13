@@ -56,8 +56,8 @@ app.get('/goals/:username', function(req, res) {
 
 app.get('/users/:username', function (req, res) {
   // Will fetch goals for the specific user
-  db.checkForTwitterHandle(req.params.username, (results) => {
-    res.json({hasHandle: results});
+  db.getTwitterHandle(req.params.username, (results) => {
+    res.json({twitter: results});
   });
 });
 

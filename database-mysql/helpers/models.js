@@ -236,12 +236,11 @@ module.exports.getAndVerifyUser = (userObj, callback) => {
   });
 };
 
-module.exports.checkForTwitterHandle = (username, callback) => {
+module.exports.getTwitterHandle = (username, callback) => {
   connection.query('SELECT twitter FROM users WHERE username=?', [username], (err, results) => {
     if(err) throw err;
 
-    if(!results.length || results[0].twitter === null) callback(false);
-    else callback(true);
+    else callback(results[0].twitter);
   });
 };
 
