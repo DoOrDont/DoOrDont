@@ -20,17 +20,18 @@ module.exports.sendMotivTweet = (twitterHandle, goalData) => {
   });
 };
 
-const testGoal = {
-  description: 'test my app',
-  frequency: 3,
-  counter: 1
-};
+//For testing
+// const testGoal = {
+//   description: 'test my app',
+//   frequency: 3,
+//   counter: 1
+// };
 
-exports.sendMotivTweet('@testAccount', testGoal);
+// exports.sendMotivTweet('@testAccount', testGoal);
 
-// T.post('statuses/update', { status: 'Test status again' }, function (err, data, response) {
-//   console.log(data)
-// })
+
+
+
 
 // var express = require('express');
 // var passport = require('passport-twitter');
