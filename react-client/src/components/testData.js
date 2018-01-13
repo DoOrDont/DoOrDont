@@ -23,57 +23,43 @@ module.exports.dumbyUsers = [
 
 module.exports.dumbyGoals = [
   {
-    'description': 'Go to the Gym',
-    'punishment': 'A harsh email',
+    'description': 'going to the gym',
+    'punishment': 'email',
     'frequency': 5,
     'counter': 2,
     'user_id': 1
   },
   {
-    'description': 'Go to the Mall',
-    'punishment': 'A harsh tweet',
+    'description': 'going to the mall',
+    'punishment': 'twitter',
     'frequency': 7,
     'counter': 7,
     'user_id': 3
   },
   {
-    'description': 'Go to Space',
-    'punishment': 'A harsh reality',
-    'frequency': 2,
-    'counter': 1,
-    'user_id': 4
-  },
-  {
-    'description': 'Eat more cookies',
-    'punishment': 'A harsh facebook post',
+    'description': 'eating more cookies',
+    'punishment': 'email',
     'frequency': 6,
     'counter': 4,
     'user_id': 5
   },
   {
-    'description': 'Eat less pie',
-    'punishment': 'A harsh waistline',
+    'description': 'eating less pie',
+    'punishment': 'twitter',
     'frequency': 3,
     'counter': 2,
     'user_id': 1
   },
   {
-    'description': 'Read for an hour',
-    'punishment': 'A harsh IQ',
+    'description': 'reading',
+    'punishment': 'email',
     'frequency': 4,
     'counter': 1,
     'user_id': 4
   },
   {
-    'description': 'NEVER READ AGAIN',
-    'punishment': 'become twitch chat',
-    'frequency': 7,
-    'counter': 6,
-    'user_id': 3
-  },
-  {
-    'description': 'Clean my appartment',
-    'punishment': 'A harsh smell',
+    'description': 'cleaning my apartment',
+    'punishment': 'email',
     'frequency': 5,
     'counter': 2,
     'user_id': 2

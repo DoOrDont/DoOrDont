@@ -116,9 +116,9 @@ class CreateGoal extends React.Component {
           onChange={(e) => this.handleInputChange('punishment', e)} /> */}
         </form>
         <Link to="/">
-          <button type="button">
+          <FlatButton>
             Cancel
-          </button>
+          </FlatButton>
         </Link>
       </div>
     )

@@ -72,17 +72,17 @@ export default class LogInForm extends React.Component {
       />,
     ];
     return (
-      <div>
+      <div id="login">
 
         {this.state.signedIn === true ? <Redirect to="/" /> : ''}
 
         <Dialog
-          title="Blank Username or Password"
+          title="Blank username or password"
           actions={actions}
           modal={true}
           open={this.state.open}
         >
-          Both Username and Password cannot be blank.
+          Both username and password cannot be blank.
         </Dialog>
         
         <h2>Login</h2>
@@ -112,10 +112,9 @@ export default class LogInForm extends React.Component {
             > Login
             </RaisedButton>
           </div>
+          <br></br>
           <Link to="/signup">
-            <RaisedButton>
-              Create an Account
-            </RaisedButton>
+            Not a user? Sign up here.
           </Link>
       </div>
     );

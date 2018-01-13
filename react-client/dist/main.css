@@ -1,28 +1,41 @@
 body {
   font-family: 'Roboto', sans-serif;
+  background: #FFBB00;
+}
+
+h1 {
+  font-family: 'Roboto', sans-serif;
+  color: #454545;
 }
 
 h2 {
   font-family: 'Roboto', sans-serif;
 }
 
+#navbar {
+  background-color: #FFFFFF;
+  text-decoration-color: #454545;
+}
+
 li {
   display: flex;
   justify-content: flex-start;
+  background-color: #FFFFFF;
+  width: 80vw;
+  padding: 2vh;
+  margin-top: 1vh;
 }
 
-li:nth-child(2n){
-  background: #f7f7f7;
-} 
-
-.goalDescription {
-  align-self: flex-start;
+.icons {
+  display: flex;
+  justify-content: flex-end;
 }
 
-.deleteGoal {
-  align-self: flex-end;
+#progress-bar {
+  display: flex;
+  align-items: flex-end;
 }
 
-input {
-  text-align: center;
+.create-goal {
+  padding: 5px;
 }
