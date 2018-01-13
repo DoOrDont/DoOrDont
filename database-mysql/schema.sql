@@ -13,6 +13,7 @@ CREATE TABLE `users` (
   `username` VARCHAR(50) UNIQUE NOT NULL,
   `password` VARCHAR(200) NOT NULL,
   `salt` VARCHAR(50) NOT NULL DEFAULT "",
+  `twitter` VARCHAR(50) DEFAULT NULL,
   `token` VARCHAR(200) DEFAULT NULL,
   `tokenSecret` VARCHAR(200) DEFAULT NULL,
   PRIMARY KEY (`id`)

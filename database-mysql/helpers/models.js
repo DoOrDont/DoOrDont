@@ -236,10 +236,9 @@ module.exports.getAndVerifyUser = (userObj, callback) => {
   });
 };
 
-module.exports.addTwitterCreds = (credsObj, callback) => {
-  const{username, token, tokenSecret} = credsObj;
-  connection.query('UPDATE users SET token=?, tokenSecret=? WHERE username=?;', 
-                   [token, tokenSecret, username], (err, results) => {
+module.exports.addTwitterHandle = (twitterHandle, username, callback) => {
+  connection.query('UPDATE users SET twitter=? WHERE username=?;', 
+                   [twitterHandle, username], (err, results) => {
     if(err) throw err;
 
     callback(results);
