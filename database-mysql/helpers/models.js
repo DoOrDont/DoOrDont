@@ -236,6 +236,15 @@ module.exports.getAndVerifyUser = (userObj, callback) => {
   });
 };
 
+module.exports.checkForTwitterHandle = (username, callback) => {
+  connection.query('SELECT twitter FROM users WHERE username=?', [username], (err, results) => {
+    if(err) throw err;
+
+    if(!results.length || results[0].twitter === null) callback(false);
+    else callback(true);
+  });
+};
+
 module.exports.addTwitterHandle = (twitterHandle, username, callback) => {
   connection.query('UPDATE users SET twitter=? WHERE username=?;', 
                    [twitterHandle, username], (err, results) => {
