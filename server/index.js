@@ -128,6 +128,14 @@ app.post('/jobs', function(req, res) {
   res.sendStatus(201);
 });
 
+app.post('/twitter/:username', function (req, res) {
+  // Will fetch goals for the specific user
+  console.log('USERNAME AT /users:', req.params.username);
+  db.addTwitterHandle(req.body.twitter, req.params.username, (results) => {
+    res.json(results);
+  });
+});
+
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname + '/../react-client/dist/index.html'));
 });
