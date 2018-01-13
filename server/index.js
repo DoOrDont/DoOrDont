@@ -54,6 +54,13 @@ app.get('/goals/:username', function(req, res) {
   });
 });
 
+app.get('/users/:username', function (req, res) {
+  // Will fetch goals for the specific user
+  db.getTwitterHandle(req.params.username, (results) => {
+    res.json({twitter: results});
+  });
+});
+
 
 /******* Handle POST requests ********/
 app.post('/login', function(req, res) {
@@ -115,10 +122,18 @@ app.put('/goals', function(req, res) {
 });
 
 app.post('/jobs', function(req, res) {
-  const {email, goalId} = req.body;
-  jobs.scheduleEmail(email, goalId);
-  jobs.scheduleReminder(email);
+  console.log('Serving /jobs:', req.body);
+  jobs.scheduleNotification(req.body);
+  // jobs.scheduleReminder(req.body.email);
   res.sendStatus(201);
+});
+
+app.post('/twitter/:username', function (req, res) {
+  // Will fetch goals for the specific user
+  console.log('USERNAME AT /users:', req.params.username);
+  db.addTwitterHandle(req.body.twitter, req.params.username, (results) => {
+    res.json(results);
+  });
 });
 
 app.get('*', (req, res) => {

@@ -1,5 +1,6 @@
 const schedule = require('node-schedule');
 const nodemailer = require('nodemailer');
+const sendMotivTweet = require('./auth/twitter').sendMotivTweet;
 const db = require('../database-mysql/helpers/models.js');
 
 const transporter = nodemailer.createTransport({
@@ -10,9 +11,11 @@ const transporter = nodemailer.createTransport({
   }
 });
 
-module.exports.scheduleEmail = (email, goalId) => {
+module.exports.scheduleNotification = (goalInfo) => {
+  const {email, goalId, punishment} = goalInfo;
   const rule = new schedule.RecurrenceRule();
-
+  
+  console.log('Scheduling thing:', goalInfo);
   // if(process.env.NODE_ENV === 'production') {
   if(process.env.NODE_ENV === 'production') {
     //for production:
@@ -28,7 +31,10 @@ module.exports.scheduleEmail = (email, goalId) => {
   const job = schedule.scheduleJob(rule, () => {
     db.checkGoalCompletion(goalId, (results) => {
 
-      if(results && !results.metGoal) {
+      console.log('RESULTS:', results);
+
+      if(results && !results.metGoal && punishment === 'email') {
+        console.log('Scheduling email thing:', goalInfo);
         let message;
         if(results.initiate) {
           message = `You promised to "${results.description}" at least ${results.frequency} times, but you only did it ${results.counter} times!`;
@@ -54,7 +60,15 @@ module.exports.scheduleEmail = (email, goalId) => {
             console.log('Goal counter reset');
           });
         });
+
+      } else if (results && !results.metGoal && punishment === 'twitter') {
+        db.getTwitterHandle(goalInfo.username, (twitterHandle) => {
+          
+          console.log('Scheduling twitter thing:', goalInfo);
+          sendMotivTweet(twitterHandle, results);
+        });
       }
+
     });
   });
 };
@@ -95,6 +109,8 @@ module.exports.scheduleReminder = (email) => {
     });
   });
 };
+
+module.exports.scheduleTweet
 
 //Test
 // exports.scheduleEmail('jontmichie@gmail.com', 3);

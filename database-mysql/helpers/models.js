@@ -29,7 +29,6 @@ module.exports.getGoalsForUser = (username, callback) => {
                    (SELECT id FROM users WHERE username=?)=goals.user_id;`, [username], function (err, results) {
     if (err) throw err;
 
-    console.log('DB results:', results);
     callback(results);
   });
 };
@@ -70,7 +69,6 @@ module.exports.insertGoalsIntoDB = (goalsObj, callback) => {
                     (err, results) => {
                       if (err) return console.log(err);
 
-                      console.log('DB results:', results);
                       callback(results);
                     });
 };
@@ -236,10 +234,17 @@ module.exports.getAndVerifyUser = (userObj, callback) => {
   });
 };
 
-module.exports.addTwitterCreds = (credsObj, callback) => {
-  const{username, token, tokenSecret} = credsObj;
-  connection.query('UPDATE users SET token=?, tokenSecret=? WHERE username=?;', 
-                   [token, tokenSecret, username], (err, results) => {
+module.exports.getTwitterHandle = (username, callback) => {
+  connection.query('SELECT twitter FROM users WHERE username=?', [username], (err, results) => {
+    if(err) throw err;
+
+    else callback(results[0].twitter);
+  });
+};
+
+module.exports.addTwitterHandle = (twitterHandle, username, callback) => {
+  connection.query('UPDATE users SET twitter=? WHERE username=?;', 
+                   [twitterHandle, username], (err, results) => {
     if(err) throw err;
 
     callback(results);
