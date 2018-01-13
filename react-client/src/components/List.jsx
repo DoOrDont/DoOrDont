@@ -63,32 +63,33 @@ class List extends React.Component {
     });
   }
 
-  componentDidMount() {
-    if(window.localStorage.getItem('accessToken') !== null) {
-      const goalId = window.localStorage.getItem('newestGoalId');
-      let tokenObj = jwtDecode(window.localStorage.getItem('accessToken'));
-      $.ajax({
-        url: '/goals/' + tokenObj.username,
-        success: (data) => {
-          if(goalId && data.length) {
-            data[data.length - 1].goalId = Number(goalId);
-            window.localStorage.removeItem('newestGoalId');
-          }
-          this.setState({
-            goals: data,
-            signedIn: true
-          });
-        },
-        error: (err) => {
-          console.log('err', err);
-        }
-      });
-    } else {
-      this.setState({signedIn: false});
-    }
-  }
+  // componentDidMount() {
+  //   if(window.localStorage.getItem('accessToken') !== null) {
+  //     const goalId = window.localStorage.getItem('newestGoalId');
+  //     let tokenObj = jwtDecode(window.localStorage.getItem('accessToken'));
+  //     $.ajax({
+  //       url: '/goals/' + tokenObj.username,
+  //       success: (data) => {
+  //         if(goalId && data.length) {
+  //           data[data.length - 1].goalId = Number(goalId);
+  //           window.localStorage.removeItem('newestGoalId');
+  //         }
+  //         this.setState({
+  //           goals: data,
+  //           signedIn: true
+  //         });
+  //       },
+  //       error: (err) => {
+  //         console.log('err', err);
+  //       }
+  //     });
+  //   } else {
+  //     this.setState({signedIn: false});
+  //   }
+  // }
   
   render () {
+    console.log(this.state.goals)
     return (
       <div>
         {this.state.signedIn === false ? <Redirect to="/login" /> : ''}
@@ -104,6 +105,8 @@ class List extends React.Component {
             <ListItem 
               goal={goal} 
               key={index} 
+              frequency={goal.frequency}
+              counter={goal.counter}
               index={goal.goalId || index} 
               incrementGoal={this.incrementGoal.bind(this)} 
               editGoal={this.editGoal.bind(this)} 
