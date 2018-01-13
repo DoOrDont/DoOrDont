@@ -29,7 +29,6 @@ module.exports.getGoalsForUser = (username, callback) => {
                    (SELECT id FROM users WHERE username=?)=goals.user_id;`, [username], function (err, results) {
     if (err) throw err;
 
-    console.log('DB results:', results);
     callback(results);
   });
 };
@@ -70,7 +69,6 @@ module.exports.insertGoalsIntoDB = (goalsObj, callback) => {
                     (err, results) => {
                       if (err) return console.log(err);
 
-                      console.log('DB results:', results);
                       callback(results);
                     });
 };

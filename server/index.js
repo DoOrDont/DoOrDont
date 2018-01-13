@@ -122,9 +122,9 @@ app.put('/goals', function(req, res) {
 });
 
 app.post('/jobs', function(req, res) {
-  const {email, goalId} = req.body;
-  jobs.scheduleEmail(email, goalId);
-  jobs.scheduleReminder(email);
+  console.log('Serving /jobs:', req.body);
+  jobs.scheduleNotification(req.body);
+  // jobs.scheduleReminder(req.body.email);
   res.sendStatus(201);
 });
 

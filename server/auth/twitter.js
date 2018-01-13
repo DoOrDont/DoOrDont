@@ -12,8 +12,7 @@ const T = new Twit(TWIT_CONFIG);
 
 module.exports.sendMotivTweet = (twitterHandle, goalData) => {
   twitterHandle = twitterHandle[0] === '@' ? twitterHandle : '@' + twitterHandle;
-  let message = `${twitterHandle} promised to ${goalData.description} at least ${goalData.frequency}
-                 time(s) a week, but they only did it ${goalData.counter} time(s)!`;
+  let message = `${twitterHandle} promised to ${goalData.description} at least ${goalData.frequency} time(s) a week, but they only did it ${goalData.counter} time(s)!`;
 
   T.post('statuses/update', { status: message }, function (err, data, response) {
     console.log(data);
