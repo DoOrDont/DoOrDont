@@ -34,9 +34,7 @@ class Quote extends React.Component {
   render() {
     return (
       <div>
-        {this.state.quote}
-        <br/>
-        -{this.state.author}
+        {this.state.quote}  -{this.state.author}
       </div>
     )
   }
