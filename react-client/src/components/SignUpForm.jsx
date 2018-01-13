@@ -110,7 +110,7 @@ export default class SignUpForm extends React.Component {
           </div>
           <div>
             <TextField
-              hintText="Re-enter Password" 
+              hintText="Re-enter password" 
               id="password2" 
               onChange={this.setPassword2.bind(this)} 
               value={this.state.password2} 
@@ -132,10 +132,9 @@ export default class SignUpForm extends React.Component {
             > Sign up
             </RaisedButton>
           </div>
+          <br></br>
           <Link to="/login">
-            <RaisedButton>
-              Log In 
-            </RaisedButton>
+            Already a user? Log in here.
           </Link>
       </div>
     )

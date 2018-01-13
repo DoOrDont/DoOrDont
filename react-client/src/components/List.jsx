@@ -89,7 +89,12 @@ class List extends React.Component {
   // }
   
   render () {
-    console.log(this.state.goals)
+
+    const buttonStyle = {
+      'paddingLeft': '5px',
+      'paddingRight': '5px'
+    };
+
     return (
       <div>
         {this.state.signedIn === false ? <Redirect to="/login" /> : ''}
@@ -116,7 +121,7 @@ class List extends React.Component {
           </ul>
         <br/><br/>
         <Link to="/creategoal">
-          <RaisedButton>
+          <RaisedButton style={buttonStyle}>
             Create a Goal
           </RaisedButton>
         </Link>
