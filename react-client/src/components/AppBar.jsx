@@ -11,6 +11,7 @@ const AppBarNav = () => (
     title="Do || Dont"
     iconClassNameRight="muidocs-icon-navigation-expand-more"
     style={navStyle}
+    titleStyle={{color: '#000'}}
   />
 );
 
