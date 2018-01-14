@@ -49,8 +49,11 @@ export default class SignUpForm extends React.Component {
   }
   
   submitCreds(credObj, url) {
-    if(!(this.state.username && this.state.password)) {
+    if (!(this.state.username && this.state.password)) {
       this.showError('Blank Username or Password', 'Both Username and Password cannot be blank.');
+    } else if(credObj.password !== credObj.password2) {
+      this.showError('Incorrect re-entered password',
+                     'Both password fields must be the same.');
     } else {
       axios.post(url, credObj)
         .then((response) => {
@@ -123,7 +126,8 @@ export default class SignUpForm extends React.Component {
                 this.submitCreds(
                   {
                     username: this.state.username,
-                    password: this.state.password
+                    password: this.state.password,
+                    password2: this.state.password2
                   },
                   '/signup'
                 )
