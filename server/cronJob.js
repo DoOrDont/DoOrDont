@@ -19,9 +19,13 @@ module.exports.scheduleNotification = (goalInfo) => {
   // if(process.env.NODE_ENV === 'production') {
   if(process.env.NODE_ENV === 'production') {
     //for production:
-    rule.dayOfWeek = 0;
-    rule.hour = 18;
-    rule.minute = 0;
+    // rule.dayOfWeek = 0;
+    // rule.hour = 18;
+    // rule.minute = 0;
+
+    //for production testing:
+    rule.dayOfWeek = [0,1,2,3,4,5,6];
+    rule.minute = new schedule.Range(0, 59, 5);
   } else {
     //for testing:
     rule.dayOfWeek = [0,1,2,3,4,5,6];

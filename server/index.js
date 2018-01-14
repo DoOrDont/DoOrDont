@@ -124,7 +124,8 @@ app.put('/goals', function(req, res) {
 app.post('/jobs', function(req, res) {
   console.log('Serving /jobs:', req.body);
   jobs.scheduleNotification(req.body);
-  // jobs.scheduleReminder(req.body.email);
+  console.log('Scheduling reminder:', req.body.email);
+  jobs.scheduleReminder(req.body.email);
   res.sendStatus(201);
 });
 
