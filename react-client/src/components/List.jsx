@@ -127,7 +127,6 @@ class List extends React.Component {
           </RaisedButton>
         </Link><br/><br/>
         <Quote />
-        <span><a href="https://theysaidso.com" title="Powered by quotes from theysaidso.com">theysaidso.com</a></span>
       </div>
     )
   }
