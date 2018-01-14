@@ -1,5 +1,6 @@
 import React from 'react';
 import ListItem from './ListItem.jsx';
+import Quote from './Quote.jsx';
 import $ from 'jquery';
 import dumbyData from './testData.js';
 import { Link, Redirect } from 'react-router-dom';
@@ -63,30 +64,30 @@ class List extends React.Component {
     });
   }
 
-  // componentDidMount() {
-  //   if(window.localStorage.getItem('accessToken') !== null) {
-  //     const goalId = window.localStorage.getItem('newestGoalId');
-  //     let tokenObj = jwtDecode(window.localStorage.getItem('accessToken'));
-  //     $.ajax({
-  //       url: '/goals/' + tokenObj.username,
-  //       success: (data) => {
-  //         if(goalId && data.length) {
-  //           data[data.length - 1].goalId = Number(goalId);
-  //           window.localStorage.removeItem('newestGoalId');
-  //         }
-  //         this.setState({
-  //           goals: data,
-  //           signedIn: true
-  //         });
-  //       },
-  //       error: (err) => {
-  //         console.log('err', err);
-  //       }
-  //     });
-  //   } else {
-  //     this.setState({signedIn: false});
-  //   }
-  // }
+  componentDidMount() {
+    if(window.localStorage.getItem('accessToken') !== null) {
+      const goalId = window.localStorage.getItem('newestGoalId');
+      let tokenObj = jwtDecode(window.localStorage.getItem('accessToken'));
+      $.ajax({
+        url: '/goals/' + tokenObj.username,
+        success: (data) => {
+          if(goalId && data.length) {
+            data[data.length - 1].goalId = Number(goalId);
+            window.localStorage.removeItem('newestGoalId');
+          }
+          this.setState({
+            goals: data,
+            signedIn: true
+          });
+        },
+        error: (err) => {
+          console.log('err', err);
+        }
+      });
+    } else {
+      this.setState({signedIn: false});
+    }
+  }
   
   render () {
 
@@ -124,7 +125,9 @@ class List extends React.Component {
           <RaisedButton style={buttonStyle}>
             Create a Goal
           </RaisedButton>
-        </Link>
+        </Link><br/><br/>
+        <Quote />
+        <span><img src="https://theysaidso.com/branding/theysaidso.png" height="20" width="20" alt="theysaidso.com"/><a href="https://theysaidso.com" title="Powered by quotes from theysaidso.com">theysaidso.com</a></span>
       </div>
     )
   }
