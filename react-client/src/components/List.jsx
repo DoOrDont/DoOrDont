@@ -23,6 +23,11 @@ class List extends React.Component {
   }
 
   incrementGoal(goalIndex) {
+    this.state.goals.forEach((goal, index) => {
+      if(goal.id === goalIndex) {
+        goalIndex = index;
+      }
+    });
     let incrementedGoal = this.state.goals[goalIndex];
     $.ajax({
       url: '/goals',

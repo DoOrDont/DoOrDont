@@ -82,15 +82,21 @@ class Punishments extends React.Component {
     }
 
     handleTwitterSubmit() {
-      let token = window.localStorage.getItem('accessToken');
-      let tokenObj = jwtDecode(token);
-      const username = tokenObj.username;
-      axios.post('/twitter/' + username, {twitter: this.state.twitter})
-      .then((response) => {
-        console.log(response.status);
-        this.setState({redirect: true});
-      })
-      .catch((err) => console.log(err));
+      if(this.state.twitter) {
+        let token = window.localStorage.getItem('accessToken');
+        let tokenObj = jwtDecode(token);
+        const username = tokenObj.username;
+        axios.post('/twitter/' + username, {twitter: this.state.twitter})
+        .then((response) => {
+          console.log(response.status);
+          this.setState({redirect: true});
+        })
+        .catch((err) => console.log(err));
+      }
+    }
+
+    handleClose() {
+      this.setState({open: false});
     }
 
   render() {
@@ -100,6 +106,11 @@ class Punishments extends React.Component {
         label="OK"
         primary={true}
         onClick={this.handleTwitterSubmit.bind(this)}
+      />,
+      <FlatButton
+        label="Cancel"
+        primary={true}
+        onClick={this.handleClose.bind(this)}
       />,
     ];
 
