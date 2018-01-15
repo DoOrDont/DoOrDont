@@ -21,6 +21,7 @@ class Review extends React.Component {
 
 
   handleReviewSubmit(e) {
+    console.log('POSTING GOAL:', this.state.goal);
     axios.post('/goals', this.state.goal)
       .then((response) => {
         if (response.status === 200) {
@@ -38,7 +39,8 @@ class Review extends React.Component {
         return axios.post('/jobs', goalInfo);
       })
       .then((response) => {
-        console.log('Job Started!');
+        console.log(this.state.goal);
+        console.log('Job Started!!!!!!');
       })
       .catch(function (error) {
         console.log(error);
@@ -51,6 +53,7 @@ class Review extends React.Component {
   }
 
   render() {
+    console.log(this.state.goal);
 
     const style = {
       height: '10vh',
