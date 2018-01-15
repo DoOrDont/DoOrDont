@@ -55,7 +55,8 @@ class Review extends React.Component {
     const style = {
       height: '10vh',
       width: '80vw',
-      margin: 20,
+      margin: '30px',
+      padding: '-15px 10px 15px 10px',
       textAlign: 'center',
       display: 'inline-block',
     };
