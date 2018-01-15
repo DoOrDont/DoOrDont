@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import { RaisedButton, TextField, DropDownMenu, Dialog, FlatButton } from 'material-ui';
+import { RaisedButton, TextField, DropDownMenu, MenuItem, Dialog, FlatButton } from 'material-ui';
 const jwtDecode = require('jwt-decode');
 
 class CreateGoal extends React.Component {
@@ -35,6 +35,7 @@ class CreateGoal extends React.Component {
 
   handleInputChange(stateKey, event) {
     console.log(this.state);
+    console.log(event.target.value);
     this.changeRoute[stateKey](event.target.value);
   }
 
@@ -84,6 +85,15 @@ class CreateGoal extends React.Component {
       />,
     ];
 
+    const style = {
+      dropdown: {
+        width: '15vw'
+      }, 
+      textfield: {
+        borderColor: '#454545'
+      }
+    }
+
     return (
       <div>
         <Dialog
@@ -97,17 +107,35 @@ class CreateGoal extends React.Component {
 
         {this.state.submitted === true ? <Redirect to="/punishment" /> : ''}
         <form onSubmit={this.handleSubmit}>
-          <h1>I want to
-          <select onChange={(e) => this.handleInputChange('initiate', e)}>
-            <option value={true}>start</option>
-            <option value={false}>quit</option>
-          </select>
-          <TextField type="text" value={this.state.description} onChange={(e) => this.handleInputChange('description', e)} />
           
-          at least
-          <TextField type="number" value={this.state.frequency} 
-          onChange={(e) => this.handleInputChange('frequency', e)}/> times a week.
-          </h1> <br/>
+          <h2 id="goal">I want to
+          
+          <DropDownMenu 
+            value={this.state.intiate} 
+            autoWidth={false} style={style.dropdown} 
+            onChange={(e) => this.handleInputChange('initiate', e)}>
+              <MenuItem value={true} primaryText='start' />
+              <MenuItem value={false} primaryText='quit' />
+          </DropDownMenu>
+          
+          <TextField 
+            id="goal"
+            type="text" 
+            hintText="going to the gym"
+            value={this.state.description} 
+            style={style.textfield}
+            underlineFocusStyle={style.textfield} 
+            onChange={(e) => this.handleInputChange('description', e)} /> at least &nbsp;
+
+          <TextField 
+            id="frequency"
+            type="number" 
+            hintText="5"
+            value={this.state.frequency} 
+            style={style.textfield}
+            underlineFocusStyle={style.textfield}
+            onChange={(e) => this.handleInputChange('frequency', e)}/> times a week.
+          </h2> <br/>
 
           <RaisedButton label="Next" onClick={this.handleSubmit}/>
 
