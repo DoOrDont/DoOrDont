@@ -4,7 +4,7 @@ import Quote from './Quote.jsx';
 import $ from 'jquery';
 import dumbyData from './testData.js';
 import { Link, Redirect } from 'react-router-dom';
-import { RaisedButton, TextField } from 'material-ui';
+import { RaisedButton, TextField, Dialog, FlatButton } from 'material-ui';
 const axios = require('axios');
 const jwtDecode = require('jwt-decode');
 
@@ -17,7 +17,8 @@ class List extends React.Component {
     this.state = { 
       goals: dumbyData.dumbyGoals,
       token: null,
-      signedIn: true
+      signedIn: true,
+      open: false
     };
   }
 
@@ -41,12 +42,8 @@ class List extends React.Component {
     });
   }
 
-  editGoal(newGoal) {
-    //TODO: change goal
-  }
-
-  deleteGoal(goalIndex) {
-    //TODO: delete goal
+  deleteGoal() {
+    const goalIndex = Number(window.sessionStorage.getItem('goalIndex'));
     const deletedGoal = this.state.goals[goalIndex];
     $.ajax({
       url: '/goals',
@@ -56,7 +53,7 @@ class List extends React.Component {
       dataType: "json",
       success: (data) => {
         const newState = this.state.goals.slice(0, goalIndex).concat(this.state.goals.slice(goalIndex + 1));
-        this.setState({goals: newState});
+        this.setState({goals: newState, open: false});
       },
       error: (err) => {
         console.log('err', err);
@@ -88,8 +85,29 @@ class List extends React.Component {
       this.setState({signedIn: false});
     }
   }
+
+  handleClose() {
+    this.setState({open: false});
+  }
+
+  promtDelete(goalIndex) {
+    window.sessionStorage.goalIndex = goalIndex;
+    this.setState({open: true});
+  }
   
   render () {
+    const actions = [
+      <FlatButton
+        label="Yes"
+        primary={true}
+        onClick={this.deleteGoal.bind(this)}
+      />,
+      <FlatButton
+        label="No"
+        primary={true}
+        onClick={this.handleClose.bind(this)}
+      />
+    ];
 
     const buttonStyle = {
       'paddingLeft': '5px',
@@ -98,6 +116,16 @@ class List extends React.Component {
 
     return (
       <div>
+
+        <Dialog
+          title=""
+          actions={actions}
+          modal={true}
+          open={this.state.open}
+        >
+          Are you sure you want to delete this goal?
+        </Dialog>
+
         {this.state.signedIn === false ? <Redirect to="/login" /> : ''}
         <Link to="/login">
           <RaisedButton>
@@ -116,7 +144,7 @@ class List extends React.Component {
               index={goal.goalId || index} 
               incrementGoal={this.incrementGoal.bind(this)} 
               editGoal={this.editGoal.bind(this)} 
-              deleteGoal={this.deleteGoal.bind(this)}
+              deleteGoal={this.promtDelete.bind(this)}
             />
           ))}
           </ul>
