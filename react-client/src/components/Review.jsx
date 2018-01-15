@@ -66,7 +66,7 @@ class Review extends React.Component {
         {this.state.success === true ? <Redirect to="/" /> : ''}
         <div id="goal-freq">
           <Paper style={style}>
-            <h2>I want to {this.state.goal.initiate === 'true' ? 'start' : 'quit'} {this.state.goal.description} 
+            <h2>I want to {this.state.goal.initiate === true ? 'start' : 'quit'} {this.state.goal.description} 
                 &nbsp;at least {this.state.goal.frequency} times a week.
             </h2>
           </Paper>
