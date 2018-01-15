@@ -143,7 +143,6 @@ class List extends React.Component {
               counter={goal.counter}
               index={goal.goalId || index} 
               incrementGoal={this.incrementGoal.bind(this)} 
-              editGoal={this.editGoal.bind(this)} 
               deleteGoal={this.promtDelete.bind(this)}
             />
           ))}
