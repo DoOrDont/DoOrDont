@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import { RaisedButton, TextField, DropDownMenu, MenuItem, Dialog, FlatButton } from 'material-ui';
+import { SelectField, RaisedButton, TextField, DropDownMenu, MenuItem, Dialog, FlatButton } from 'material-ui';
 const jwtDecode = require('jwt-decode');
 
 class CreateGoal extends React.Component {
@@ -33,10 +33,12 @@ class CreateGoal extends React.Component {
     window.localStorage.setItem('goalObj', '{}');
   }
 
-  handleInputChange(stateKey, event) {
-    console.log(this.state);
-    console.log(event.target.value);
-    this.changeRoute[stateKey](event.target.value);
+  handleInputChange(stateKey, event, index, val) {
+    if(val !== undefined) {
+      this.changeRoute[stateKey](val);
+    } else {
+      this.changeRoute[stateKey](event.target.value);
+    }
   }
 
   handleSubmit(e) {
@@ -87,10 +89,13 @@ class CreateGoal extends React.Component {
 
     const style = {
       dropdown: {
-        width: '15vw'
+        width: '17vw',
+        fontSize: '1em',
+        verticalAlign: 'bottom'
       }, 
       textfield: {
-        borderColor: '#454545'
+        borderColor: '#454545',
+        fontSize: '1em'
       }
     }
 
@@ -108,16 +113,28 @@ class CreateGoal extends React.Component {
         {this.state.submitted === true ? <Redirect to="/punishment" /> : ''}
         <form onSubmit={this.handleSubmit}>
           
-          <h2 id="goal">I want to
+          <h2 id="goal">I want to &nbsp;
           
-          <DropDownMenu 
+          {/* <DropDownMenu 
             value={this.state.intiate} 
             autoWidth={false} style={style.dropdown} 
-            onChange={(e) => this.handleInputChange('initiate', e)}>
+            onChange={(e, i, val) => this.handleInputChange('initiate', e, i, val)}>
               <MenuItem value={true} primaryText='start' />
               <MenuItem value={false} primaryText='quit' />
-          </DropDownMenu>
+          </DropDownMenu> */}
           
+          <SelectField
+            value={this.state.initiate}
+            onChange={(e, i, val) => this.handleInputChange('initiate', e, i, val)}
+            style={style.dropdown}
+            autoWidth={true}
+            hintStyle={{fontSize: '1em'}}
+            hintText={"Start/Quit"}
+          >
+              <MenuItem value={true} primaryText='start' />
+              <MenuItem value={false} primaryText='quit' />
+          </SelectField> &nbsp;
+
           <TextField 
             id="goal"
             type="text" 
