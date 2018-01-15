@@ -23,10 +23,10 @@ const quotes = [
   { text: 'Obstacles are those things you see when you take your eyes off the goal.', 
     author: 'Hannah More'
   },
-  { text: 'There are no failures. Just experiences and your reactions to them.', 
+  { text: 'There are no failures - just experiences and your reactions to them.', 
     author: 'Tom Krause'
   },
-  { text: 'The person who makes a success of living is the one who see his goal steadily and aims for it unswervingly. That is dedication.', 
+  { text: 'The person who makes a success of living is the one who sees his goal steadily and aims for it unswervingly. That is dedication.', 
     author: 'Cecil B. DeMille'
   },
   { text: 'If you find yourself in a hole, the first thing to do is stop digging.', 
