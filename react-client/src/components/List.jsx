@@ -127,7 +127,6 @@ class List extends React.Component {
           </RaisedButton>
         </Link><br/><br/>
         <Quote />
-        <span><img src="https://theysaidso.com/branding/theysaidso.png" height="20" width="20" alt="theysaidso.com"/><a href="https://theysaidso.com" title="Powered by quotes from theysaidso.com">theysaidso.com</a></span>
       </div>
     )
   }
