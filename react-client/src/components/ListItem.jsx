@@ -7,7 +7,7 @@ class ListItem extends React.Component {
     super(props);
 
     this.state = {
-      progress: (this.props.counter / this.props.frequency) * 100
+      progress: 0
     };
   }
 
@@ -18,28 +18,29 @@ class ListItem extends React.Component {
     };
 
     return(
+      console.log(this),
       <div className="item">
-        <li>
-          <div className="goalDescription">{ this.props.goal.description }</div>
-          
+        <li >
+          <div> 
+            {this.props.goal.counter >= this.props.goal.frequency ?
+             <i className="incrementGoal fa fa-check-square-o" aria-hidden="true"></i> : 
+             <i className="incrementGoal fa fa-square-o" aria-hidden="true"></i>} 
+          </div>&nbsp;
+          <div className="goalDescription">{ this.props.goal.description } ( { this.props.goal.counter } of { this.props.goal.frequency } )</div>&nbsp;
           <div className="icons">
-            <div onClick={() => {this.props.editGoal()}}>
-              <i className="editGoal fa fa-pencil" aria-hidden="true"></i>
-            </div>
-            
             <div onClick={() => {this.props.incrementGoal(this.props.index)}}>
               <i className="incrementGoal fa fa-plus" aria-hidden="true"></i>
-            </div>
+            </div>&nbsp;
 
             <div onClick={() => {this.props.deleteGoal(this.props.index)}}>
               <i className="deleteGoal fa fa-trash" aria-hidden="true"></i>
-            </div>
+            </div>&nbsp;
           </div>
         </li>
 
         <LinearProgress id="progress-bar" 
                         mode="determinate" 
-                        value={this.state.progress} 
+                        value={((this.props.goal.counter / this.props.goal.frequency * 100))} 
                         color='#454545' 
                         style={style} />
       </div>
