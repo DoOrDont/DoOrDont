@@ -31,11 +31,3 @@ li {
   justify-content: flex-end;
 }
 
-#progress-bar {
-  display: flex;
-  align-items: flex-end;
-}
-
-.create-goal {
-  padding: 5px;
-}
