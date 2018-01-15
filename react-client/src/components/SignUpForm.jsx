@@ -137,7 +137,7 @@ export default class SignUpForm extends React.Component {
             </RaisedButton>
           </div>
           <br></br>
-          <Link to="/login">
+          <Link to="/login" style={{textDecoration: 'none'}}>
             Already a user? Log in here.
           </Link>
       </div>
