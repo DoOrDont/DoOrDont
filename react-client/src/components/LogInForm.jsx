@@ -97,7 +97,7 @@ export default class LogInForm extends React.Component {
         <h2>Login</h2>
           <div>
             <TextField
-              hintText="Username"
+              hintText="Email"
               id="username" 
               onChange={this.setUsername.bind(this)} 
               value={this.state.username} 
