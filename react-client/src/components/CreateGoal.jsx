@@ -89,7 +89,7 @@ class CreateGoal extends React.Component {
 
     const style = {
       dropdown: {
-        // width: '16vw',
+        width: '17vw',
         fontSize: '1em',
         verticalAlign: 'bottom'
       }, 
@@ -113,7 +113,7 @@ class CreateGoal extends React.Component {
         {this.state.submitted === true ? <Redirect to="/punishment" /> : ''}
         <form onSubmit={this.handleSubmit}>
           
-          <h2 id="goal">I want to 
+          <h2 id="goal">I want to &nbsp;
           
           {/* <DropDownMenu 
             value={this.state.intiate} 
@@ -128,11 +128,12 @@ class CreateGoal extends React.Component {
             onChange={(e, i, val) => this.handleInputChange('initiate', e, i, val)}
             style={style.dropdown}
             autoWidth={true}
-            hintText="Start/Quit"
+            hintStyle={{fontSize: '1em'}}
+            hintText={"Start/Quit"}
           >
               <MenuItem value={true} primaryText='start' />
               <MenuItem value={false} primaryText='quit' />
-          </SelectField>
+          </SelectField> &nbsp;
 
           <TextField 
             id="goal"
