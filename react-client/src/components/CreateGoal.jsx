@@ -42,8 +42,6 @@ class CreateGoal extends React.Component {
   }
 
   handleSubmit(e) {
-    console.log('Form submitted');
-    console.log('STATE:', this.state);
     if(this.state.description.length && this.state.frequency.length) {
       let goalObj = JSON.parse(window.localStorage.getItem('goalObj'));
       let token = window.localStorage.getItem('accessToken');

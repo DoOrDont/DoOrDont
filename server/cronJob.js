@@ -15,7 +15,6 @@ module.exports.scheduleNotification = (goalInfo) => {
   const {email, goalId, punishment} = goalInfo;
   const rule = new schedule.RecurrenceRule();
   
-  console.log('Scheduling thing:', goalInfo);
   // if(process.env.NODE_ENV === 'production') {
   if(process.env.NODE_ENV === 'production') {
     //for production:
@@ -35,10 +34,8 @@ module.exports.scheduleNotification = (goalInfo) => {
   const job = schedule.scheduleJob(rule, () => {
     db.checkGoalCompletion(goalId, (results) => {
 
-      console.log('RESULTS:', results);
 
       if(results && !results.metGoal && punishment === 'email') {
-        console.log('Scheduling email thing:', goalInfo);
         let message;
         if(results.initiate) {
           message = `You promised to "${results.description}" at least ${results.frequency} times, but you only did it ${results.counter} times!`;
@@ -68,7 +65,6 @@ module.exports.scheduleNotification = (goalInfo) => {
       } else if (results && !results.metGoal && punishment === 'twitter') {
         db.getTwitterHandle(goalInfo.username, (twitterHandle) => {
           
-          console.log('Scheduling twitter thing:', goalInfo);
           sendMotivTweet(twitterHandle, results);
         });
       }
@@ -81,7 +77,7 @@ module.exports.scheduleReminder = (email) => {
   const rule = new schedule.RecurrenceRule();
 
   // if(process.env.NODE_ENV === 'production') {
-  if (process.env.NODE_ENV === 'production') {
+  if (false) {
     //for production:
     rule.dayOfWeek = [3, 6];
     rule.hour = 18;

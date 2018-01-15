@@ -27,7 +27,6 @@ class ListItem extends React.Component {
 
 
     return(
-      console.log(this),
       <div className="item">
         <li >
           <div> 

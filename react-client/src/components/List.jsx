@@ -36,7 +36,6 @@ class List extends React.Component {
       contentType: "application/json; charset=utf-8",
       dataType: "json",
       success: (data) => {
-        console.log('Goals:', this.state.goals);
         let newState = this.state.goals.slice();
         newState[goalIndex].counter += 1;
         this.setState({goals: newState});
