@@ -58,7 +58,6 @@ export default class SignUpForm extends React.Component {
       axios.post(url, credObj)
         .then((response) => {
           if (response.status === 200) {
-            console.log(response);
             this.setState({ signedIn: true });
           }
         })

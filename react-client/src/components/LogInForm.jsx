@@ -27,7 +27,6 @@ export default class LogInForm extends React.Component {
     const that = this;
     const credObj = {username: this.state.username, password: this.state.password};
     const url = '/login';
-    console.log('about to send post');
   
     if (!(this.state.username && this.state.password)) {
       this.handleOpen('Login Error', 'Username and Password can\'t be blank');
@@ -36,7 +35,6 @@ export default class LogInForm extends React.Component {
         .then((response) => {
           if (response.status === 200) {
             window.localStorage.accessToken = response.data.token;
-            console.log('New token:', window.localStorage.accessToken);
             this.setState({signedIn: true});
           }
         })

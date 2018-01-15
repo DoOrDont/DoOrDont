@@ -68,7 +68,6 @@ class Punishments extends React.Component {
             goal = {};
           }
           goal.punishment = 'twitter';
-          console.log('GOAL:', goal);
           window.localStorage.setItem('goalObj', JSON.stringify(goal));
           this.setState({redirect: true});
         }
@@ -77,7 +76,6 @@ class Punishments extends React.Component {
     }
 
     handleTwitterChange(e) {
-      console.log(this.state.twitter);
       this.setState({twitter: e.target.value});
     }
 
@@ -88,7 +86,6 @@ class Punishments extends React.Component {
         const username = tokenObj.username;
         axios.post('/twitter/' + username, {twitter: this.state.twitter})
         .then((response) => {
-          console.log(response.status);
           this.setState({redirect: true});
         })
         .catch((err) => console.log(err));
@@ -133,13 +130,11 @@ class Punishments extends React.Component {
           {punishments.map((pun) => (
             <GridTile key={pun.icon}>
               <Card style={cardStyles} onClick={() => {
-                console.log('Window goalObj:', window.localStorage.getItem('goalObj'));
                 let goal = JSON.parse(window.localStorage.getItem('goalObj'));
                 if (!goal) {
                   goal = {};
                 }
                 goal.punishment = pun.title;
-                console.log('GOAL:', goal);
                 window.localStorage.setItem('goalObj', JSON.stringify(goal));
 
                 if(pun.title === 'twitter') {

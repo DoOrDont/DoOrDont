@@ -15,6 +15,4 @@ const ENV_CONFIG = process.env.NODE_ENV === 'production' ? HEROKU_CONNECTION_CON
 
 const connection = mysql.createConnection(ENV_CONFIG);
 
-console.log('ENV_CONFIG', ENV_CONFIG);
-
 module.exports.connection = connection;

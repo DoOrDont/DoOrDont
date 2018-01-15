@@ -114,7 +114,6 @@ app.put('/goals', function(req, res) {
       res.json(results);
     });
   } else if(req.body.action === 'delete') {
-    console.log('Deleting goal with id:', req.body.goalId);
     db.deleteGoal(req.body.goalId, (results) => {
       res.json(results);
     });
@@ -122,16 +121,12 @@ app.put('/goals', function(req, res) {
 });
 
 app.post('/jobs', function(req, res) {
-  console.log('Serving /jobs:', req.body);
   jobs.scheduleNotification(req.body);
-  console.log('Scheduling reminder:', req.body.email);
   jobs.scheduleReminder(req.body.email);
   res.sendStatus(201);
 });
 
 app.post('/twitter/:username', function (req, res) {
-  // Will fetch goals for the specific user
-  console.log('USERNAME AT /users:', req.params.username);
   db.addTwitterHandle(req.body.twitter, req.params.username, (results) => {
     res.json(results);
   });
