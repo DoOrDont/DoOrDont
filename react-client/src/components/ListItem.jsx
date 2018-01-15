@@ -34,7 +34,7 @@ class ListItem extends React.Component {
              <i className="incrementGoal fa fa-check-square-o" aria-hidden="true"></i> : 
              <i className="incrementGoal fa fa-square-o" aria-hidden="true"></i>} 
           </div>&nbsp;
-          <div style={this.props.goal.counter >= this.props.goal.frequency ? completedStyle : incompleteStyle} className="goalDescription">{ this.props.goal.description } ( { this.props.goal.counter } of { this.props.goal.frequency } )</div>&nbsp;
+          <div style={this.props.goal.counter >= this.props.goal.frequency ? completedStyle : incompleteStyle} className="goalDescription">{ this.props.goal.initiate === 'true' ? 'start' : 'quit' } { this.props.goal.description } ( { this.props.goal.counter } of { this.props.goal.frequency } )</div>&nbsp;
           <div className="icons">
             <div onClick={() => {this.props.incrementGoal(this.props.index)}}>
               <i className="incrementGoal fa fa-plus" aria-hidden="true"></i>
