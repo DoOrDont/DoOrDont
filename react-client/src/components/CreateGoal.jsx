@@ -95,7 +95,7 @@ class CreateGoal extends React.Component {
       }, 
       textfield: {
         borderColor: '#454545',
-        fontSize: '1em'
+        fontSize: '1em',
         freq: {
           width: '3vw'
         }

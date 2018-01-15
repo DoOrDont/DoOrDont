@@ -127,11 +127,6 @@ class List extends React.Component {
         </Dialog>
 
         {this.state.signedIn === false ? <Redirect to="/login" /> : ''}
-        <Link to="/login">
-          <RaisedButton>
-            Sign Out
-          </RaisedButton>
-        </Link>
         <h4> Your goals: </h4>
           You currently have { this.state.goals.length } goals.
           <ul>
