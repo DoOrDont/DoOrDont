@@ -10,7 +10,7 @@ See [_CONTRIBUTING.md](https://github.com/DoOrDont/DoOrDont/blob/master/_CONTRIB
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
+What things you need to install and how to install them
 
 Install the following:
 Node.js
@@ -28,16 +28,17 @@ to do
 
 ## Deployment
 
-to do
+The master branch of the repo auto deploys to Heroku on merging of a pull request. 
 
 ## Built With
 
 * React
+* React-router
 * Express
 * MYSQL
 * Node.js
 * NPM
-
+* Material-UI
 
 ## Contributing
 
@@ -46,9 +47,9 @@ See [_CONTRIBUTING.md](https://github.com/DoOrDont/DoOrDont/blob/master/_CONTRIB
 
 ## Authors
 
-* **Jackie Fu** - *Initial work* - [jackielfu](https://github.com/jackielfu)
-* **Jason McLaughlin** - *Initial work* - [ranched](https://github.com/ranched)
-* **Travis Michie** - *Initial work* - [Jongerr](https://github.com/Jongerr)
+* **Jackie Fu** - [jackielfu](https://github.com/jackielfu)
+* **Jason McLaughlin** - [ranched](https://github.com/ranched)
+* **Travis Michie** - [Jongerr](https://github.com/Jongerr)
 
 See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
