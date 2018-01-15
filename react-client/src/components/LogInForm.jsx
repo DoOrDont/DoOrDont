@@ -14,8 +14,13 @@ export default class LogInForm extends React.Component {
       username: '', 
       password: '',
       open: false,
-      signedIn: false
+      signedIn: false,
+      errTitle: '',
+      errBody: ''
     };
+
+    this.handleOpen = this.handleOpen.bind(this);
+    this.submitCreds = this.submitCreds.bind(this);
   }
 
   submitCreds() {
@@ -25,7 +30,7 @@ export default class LogInForm extends React.Component {
     console.log('about to send post');
   
     if (!(this.state.username && this.state.password)) {
-      this.handleOpen();
+      this.handleOpen('Login Error', 'Username and Password can\'t be blank');
     } else {
       axios.post(url, credObj)
         .then((response) => {
@@ -35,9 +40,9 @@ export default class LogInForm extends React.Component {
             this.setState({signedIn: true});
           }
         })
-        .catch(function (error) {
+        .catch((error) => {
           console.log(error);
-          alert('Incorrect username or password');
+          this.handleOpen('Login Error', 'Incorrect Username or Password');
         });
     }
   }
@@ -54,8 +59,12 @@ export default class LogInForm extends React.Component {
     this.setState({password: e.target.value});
   }
 
-  handleOpen() {
-    this.setState({ open: true });
+  handleOpen(errTitle, errBody) {
+    this.setState({ 
+      open: true,
+      errTitle,
+      errBody 
+    });
   };
 
   handleClose() {
@@ -77,12 +86,12 @@ export default class LogInForm extends React.Component {
         {this.state.signedIn === true ? <Redirect to="/" /> : ''}
 
         <Dialog
-          title="Blank username or password"
+          title={this.state.errTitle}
           actions={actions}
           modal={true}
           open={this.state.open}
         >
-          Both username and password cannot be blank.
+          {this.state.errBody}
         </Dialog>
         
         <h2>Login</h2>
