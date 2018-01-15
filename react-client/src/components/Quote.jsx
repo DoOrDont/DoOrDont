@@ -51,9 +51,20 @@ class Quote extends React.Component {
   }
 
   render() {
+
+    const style = {
+      display: 'flex',
+      alignItems: 'flex-end'
+    };
+
     return (
       <div>
-        {this.state.quote}  -{this.state.author}
+        <h2>  
+          {this.state.quote}
+        </h2>
+        <h4 style={style}>
+          -- {this.state.author}
+        </h4>
       </div>
     )
   }
