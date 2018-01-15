@@ -50,7 +50,7 @@ class ListItem extends React.Component {
                         mode="determinate" 
                         value={((this.props.goal.counter / this.props.goal.frequency * 100))} 
                         color='#454545' 
-                        style={style} />
+                        style={{'transform': 'translate(1.5%)', 'width': '81vw'}} />
       </div>
     );
   }
