@@ -104,6 +104,7 @@ app.post('/signup', function(req, res) {
 app.post('/goals', function(req, res) {
   // Will add goals to user in database
   db.insertGoalsIntoDB(req.body, (results) => {
+    console.log('SERVER', req.body);
     res.json({goalId: results.insertId});
   });
 });

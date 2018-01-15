@@ -14,6 +14,7 @@ const transporter = nodemailer.createTransport({
 module.exports.scheduleNotification = (goalInfo) => {
   const {email, goalId, punishment} = goalInfo;
   const rule = new schedule.RecurrenceRule();
+  console.log('Scheduling notifiaction:', goalInfo);
   
   // if(process.env.NODE_ENV === 'production') {
   if(process.env.NODE_ENV === 'production') {
@@ -24,17 +25,17 @@ module.exports.scheduleNotification = (goalInfo) => {
 
     //for production testing:
     rule.dayOfWeek = [0,1,2,3,4,5,6];
-    rule.minute = new schedule.Range(0, 59, 5);
   } else {
     //for testing:
     rule.dayOfWeek = [0,1,2,3,4,5,6];
   }
   
   
+  
   const job = schedule.scheduleJob(rule, () => {
     db.checkGoalCompletion(goalId, (results) => {
 
-
+      console.log('Db Results', results);
       if(results && !results.metGoal && punishment === 'email') {
         let message;
         if(results.initiate) {
@@ -63,8 +64,9 @@ module.exports.scheduleNotification = (goalInfo) => {
         });
 
       } else if (results && !results.metGoal && punishment === 'twitter') {
+        console.log('Getting twitter handle');
         db.getTwitterHandle(goalInfo.username, (twitterHandle) => {
-          
+          console.log('Handle:', twitterHandle);
           sendMotivTweet(twitterHandle, results);
         });
       }

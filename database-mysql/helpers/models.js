@@ -59,7 +59,8 @@ module.exports.getGoalsForUser = (username, callback) => {
 ************************************************/
 module.exports.insertGoalsIntoDB = (goalsObj, callback) => {
   const {description, punishment, initiate, frequency, username} = goalsObj;
-  let initiating = initiate === 'true' ? 1 : 0;
+  console.log('DB:', goalsObj);
+  let initiating = initiate === true ? 1 : 0;
 
   connection.query(`INSERT INTO goals (description, punishment, initiate, frequency, counter, user_id) 
                     VALUES (?, ?, ?, ?, 0, (SELECT id FROM users WHERE username=?))`,
