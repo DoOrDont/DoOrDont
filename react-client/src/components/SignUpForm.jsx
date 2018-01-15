@@ -94,7 +94,7 @@ export default class SignUpForm extends React.Component {
         <h2>Sign Up</h2>
           <div>
             <TextField
-              hintText="Username"
+              hintText="Email"
               id="username" 
               onChange={this.setUsername.bind(this)} 
               value={this.state.username} 
