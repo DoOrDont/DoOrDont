@@ -7,7 +7,7 @@ const HEROKU_CONNECTION_CONFIG = JAWSDB_URL;
 const LOCAL_CONNECTION_CONFIG = {
   host: 'localhost',
   user: 'root',
-  password: 'password',
+  password: '',
   database: 'doordontdb'
 };
 
