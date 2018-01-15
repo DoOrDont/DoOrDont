@@ -234,6 +234,19 @@ module.exports.getAndVerifyUser = (userObj, callback) => {
   });
 };
 
+/************************************************
+ Function:
+   Retrieves twitter handle for given user
+
+ Inputs:
+   username: String
+          
+  Output:
+   None
+   NOTE: All data must be handled in the callback function.
+         The callback will be passed the twitter handle if
+         it exists, or null otherwise.
+************************************************/
 module.exports.getTwitterHandle = (username, callback) => {
   connection.query('SELECT twitter FROM users WHERE username=?', [username], (err, results) => {
     if(err) throw err;
@@ -242,6 +255,20 @@ module.exports.getTwitterHandle = (username, callback) => {
   });
 };
 
+/************************************************
+ Function:
+   Assigns a twitter handle to given user
+
+ Inputs:
+   twitterHandle: String
+   username: String
+          
+  Output:
+   None
+   NOTE: All data must be handled in the callback function.
+         The callback will be passed metadata about the
+         insertion.
+************************************************/
 module.exports.addTwitterHandle = (twitterHandle, username, callback) => {
   connection.query('UPDATE users SET twitter=? WHERE username=?;', 
                    [twitterHandle, username], (err, results) => {
