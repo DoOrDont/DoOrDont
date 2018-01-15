@@ -95,7 +95,10 @@ class CreateGoal extends React.Component {
       }, 
       textfield: {
         borderColor: '#454545',
-        fontSize: '1em'
+        fontSize: '1em',
+        freq: {
+          width: '3vw'
+        }
       }
     }
 
@@ -149,22 +152,24 @@ class CreateGoal extends React.Component {
             type="number" 
             hintText="5"
             value={this.state.frequency} 
-            style={style.textfield}
+            style={style.textfield.freq}
             underlineFocusStyle={style.textfield}
             onChange={(e) => this.handleInputChange('frequency', e)}/> times a week.
           </h2> <br/>
 
-          <RaisedButton label="Next" onClick={this.handleSubmit}/>
 
           {/* My punishment will be:
           <input type="text" value={this.state.punishment} 
           onChange={(e) => this.handleInputChange('punishment', e)} /> */}
         </form>
-        <Link to="/">
-          <FlatButton>
-            Cancel
-          </FlatButton>
-        </Link>
+        <div>  
+          <Link to="/">
+            <FlatButton>
+              Cancel
+            </FlatButton>
+          </Link>
+          <RaisedButton label="Next" onClick={this.handleSubmit}/>
+        </div>
       </div>
     )
   }

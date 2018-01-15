@@ -12,6 +12,10 @@ h2 {
   font-family: 'Roboto', sans-serif;
 }
 
+h3 {
+  text-align: center;
+}
+
 #navbar {
   background-color: #FFFFFF;
   text-decoration-color: #454545;
