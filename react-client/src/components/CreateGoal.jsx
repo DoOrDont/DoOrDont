@@ -157,17 +157,19 @@ class CreateGoal extends React.Component {
             onChange={(e) => this.handleInputChange('frequency', e)}/> times a week.
           </h2> <br/>
 
-          <RaisedButton label="Next" onClick={this.handleSubmit}/>
 
           {/* My punishment will be:
           <input type="text" value={this.state.punishment} 
           onChange={(e) => this.handleInputChange('punishment', e)} /> */}
         </form>
-        <Link to="/">
-          <FlatButton>
-            Cancel
-          </FlatButton>
-        </Link>
+        <div>  
+          <Link to="/">
+            <FlatButton>
+              Cancel
+            </FlatButton>
+          </Link>
+          <RaisedButton label="Next" onClick={this.handleSubmit}/>
+        </div>
       </div>
     )
   }
