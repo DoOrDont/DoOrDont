@@ -19,12 +19,12 @@ module.exports.scheduleNotification = (goalInfo) => {
   // if(process.env.NODE_ENV === 'production') {
   if(process.env.NODE_ENV === 'production') {
     //for production:
-    // rule.dayOfWeek = 0;
-    // rule.hour = 18;
-    // rule.minute = 0;
+    rule.dayOfWeek = 0;
+    rule.hour = 18;
+    rule.minute = 0;
 
     //for production testing:
-    rule.dayOfWeek = [0,1,2,3,4,5,6];
+    // rule.dayOfWeek = [0,1,2,3,4,5,6];
   } else {
     //for testing:
     rule.dayOfWeek = [0,1,2,3,4,5,6];
@@ -78,8 +78,7 @@ module.exports.scheduleNotification = (goalInfo) => {
 module.exports.scheduleReminder = (email) => {
   const rule = new schedule.RecurrenceRule();
 
-  // if(process.env.NODE_ENV === 'production') {
-  if (false) {
+  if(process.env.NODE_ENV === 'production') {
     //for production:
     rule.dayOfWeek = [3, 6];
     rule.hour = 18;
