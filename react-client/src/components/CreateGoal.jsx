@@ -130,7 +130,7 @@ class CreateGoal extends React.Component {
             style={style.dropdown}
             autoWidth={true}
             hintStyle={{fontSize: '1em'}}
-            hintText={"Start/Quit"}
+            hintText="start"
           >
               <MenuItem value={true} primaryText='start' />
               <MenuItem value={false} primaryText='quit' />
@@ -150,6 +150,7 @@ class CreateGoal extends React.Component {
             type="number" 
             hintText="5"
             value={this.state.frequency} 
+            hintStyle={{fontSize: '1em'}}
             style={style.textfield.freq}
             underlineFocusStyle={style.textfield}
             onChange={(e) => this.handleInputChange('frequency', e)}/> times a week.
